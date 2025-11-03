@@ -1,0 +1,152 @@
+---
+import '../index.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+  robots?: string;
+}
+
+const {
+  title = "RB Joinery | Professional Joinery & Building Services Ayrshire & Glasgow",
+  description = "Professional joinery & building services in Ayrshire and Glasgow. House extensions, loft conversions, garden rooms, kitchens, and home improvements. Free quotes available.",
+  canonical = "https://rbjoinery.com/",
+  image = "https://rbjoinery.com/rblogo - Edited.png",
+  robots = "index, follow"
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="joinery ayrshire, joinery glasgow, house extensions ayrshire, house extensions glasgow, loft conversions ayrshire, loft conversions glasgow, garden rooms ayrshire, garden rooms glasgow, kitchens ayrshire, kitchens glasgow, home improvements ayrshire, home improvements glasgow, carpenter ayrshire, carpenter glasgow, joinery contractors ayrshire, joinery contractors glasgow, building services ayrshire, building services glasgow, rb joinery" />
+    <meta name="author" content="RB Joinery" />
+    <meta name="robots" content={robots} />
+    <meta name="language" content="English" />
+    <meta name="geo.region" content="GB-SCT" />
+    <meta name="geo.placename" content="Ayrshire & Glasgow, Scotland" />
+    
+    <!-- Google Analytics -->
+    <script is:inline define:vars={{ gtagId: "G-6CMJ7GLMSY" }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', gtagId);
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CMJ7GLMSY"></script>
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonical} />
+    
+    <!-- Enhanced JSON-LD Schema for LocalBusiness -->
+    <script type="application/ld+json" set:html={`${JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": ["LocalBusiness", "LandscapingBusiness", "HomeImprovementContractor", "ContractorService"],
+      "name": "RB Joinery",
+      "alternateName": "RB Joinery & Building Services",
+      "description": description,
+      "url": "https://rbjoinery.com/",
+      "telephone": "+447927726622",
+      "email": "Ryan@rbjoinery.com",
+      "foundingDate": "2020",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kilmarnock",
+        "addressRegion": "Ayrshire",
+        "addressCountry": "Scotland",
+        "postalCode": "KA1"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "55.4586",
+        "longitude": "-4.6292"
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Kilmarnock", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
+        { "@type": "City", "name": "Glasgow", "containedInPlace": { "@type": "AdministrativeArea", "name": "Scotland" } },
+        { "@type": "City", "name": "Irvine", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
+        { "@type": "City", "name": "Troon", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
+        { "@type": "City", "name": "Prestwick", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
+        { "@type": "City", "name": "Ardrossan", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
+        { "@type": "City", "name": "Saltcoats", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
+        { "@type": "City", "name": "Largs", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
+        { "@type": "City", "name": "Girvan", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
+        { "@type": "AdministrativeArea", "name": "Ayrshire", "containedInPlace": { "@type": "Country", "name": "Scotland" } }
+      ],
+      "serviceType": [
+        "House Extensions", "Loft Conversions", "Garden Rooms", "Kitchen Installation",
+        "Home Improvements", "Joinery Services", "Carpentry", "Custom Built-ins",
+        "Staircases", "Doors and Windows", "Fitted Furniture", "Building Services",
+        "Renovations", "Structural Work", "Interior Design", "Bespoke Joinery",
+        "Commercial Joinery", "Maintenance and Repairs"
+      ],
+      "openingHours": [
+        "Mo 08:00-18:00", "Tu 08:00-18:00", "We 08:00-18:00",
+        "Th 08:00-18:00", "Fr 08:00-18:00", "Sa 09:00-16:00", "Su 10:00-15:00"
+      ],
+      "priceRange": "$$",
+      "image": [
+        "https://rbjoinery.com/rblogo - Edited.png",
+        "https://rbjoinery.com/RB joinery back2.jpg"
+      ],
+      "logo": "https://rbjoinery.com/rblogo - Edited.png",
+      "sameAs": [],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "reviewCount": "15",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    })}`} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/rblogo - Edited.png" />
+    <link rel="alternate icon" href="/rblogo - Edited.png" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35QPRJ2GD9"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-35QPRJ2GD9');
+    </script>
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="800" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:alt" content="RB Joinery Logo" />
+    <meta property="og:site_name" content="RB Joinery" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image:alt" content="RB Joinery Logo" />
+    
+    <meta name="theme-color" content="#1e40af" />
+    <meta name="msapplication-TileColor" content="#1e40af" />
+    <meta name="msapplication-TileImage" content="https://rbjoinery.com/rblogo - Edited.png" />
+  </head>
+
+  <body>
+    <slot />
+  </body>
+</html>
+

@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* RB Joinery Design System - Professional Green Theme
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Core brand colors - Professional Green Theme */
+    --accent-yellow: 45 100% 60%;       /* #FFD700 - Professional Gold */
+    --primary-green: 120 60% 50%;       /* #22C55E - Primary Green */
+    --dark-green: 120 60% 35%;          /* #15803D - Dark Green */
+    --light-green: 120 60% 70%;         /* #4ADE80 - Light Green */
+    --mint-green: 120 40% 80%;          /* #BBF7D0 - Mint Green */
+    --emerald-green: 142 76% 36%;       /* #059669 - Emerald Green */
+    --charcoal: 0 0% 20%;               /* #333333 */
+    --slate-grey: 220 13% 46%;          /* #64748B */
+    --light-grey: 220 13% 90%;          /* #E2E8F0 */
+    --asphalt-grey: 0 0% 18%;           /* #2F2F2F */
+    
+    /* Semantic tokens - Professional Green Theme */
+    --background: 0 0% 98%;             /* #FAFAFA */
+    --foreground: var(--asphalt-grey);
+
+    --card: 0 0% 100%;
+    --card-foreground: var(--asphalt-grey);
+
+    --popover: 0 0% 100%;
+    --popover-foreground: var(--asphalt-grey);
+
+    --primary: var(--primary-green);
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: var(--mint-green);
+    --secondary-foreground: var(--asphalt-grey);
+
+    --muted: 120 50% 95%;
+    --muted-foreground: var(--asphalt-grey);
+
+    --accent: var(--dark-green);
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 120 50% 90%;
+    --input: 120 50% 95%;
+    --ring: var(--primary-green);
+
+    /* Hero button variant */
+    --hero-button: var(--primary-green);
+    --hero-button-foreground: 0 0% 100%;
+    --hero-button-hover: var(--dark-green);
+
+    /* Trust indicators */
+    --trust-bg: var(--primary-green);
+    --trust-foreground: 0 0% 100%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--mint-green)), hsl(var(--primary-green)));
+    --gradient-services: linear-gradient(45deg, hsl(var(--primary-green)), hsl(var(--dark-green)));
+    --gradient-cta: linear-gradient(135deg, hsl(var(--light-green)), hsl(var(--dark-green)));
+
+    /* Shadows */
+    --shadow-soft: 0 10px 30px -10px hsl(var(--primary-green) / 0.3);
+    --shadow-glow: 0 0 30px hsl(var(--light-green) / 0.4);
+    --shadow-card: 0 4px 20px hsl(var(--primary-green) / 0.15);
+
+    --radius: 1rem;
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 142 76% 36%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 142 76% 36%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    overflow-x: hidden;
+  }
+  
+  html {
+    overflow-x: hidden;
+  }
+  
+  /* Prevent horizontal overflow on all elements */
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Ensure images are responsive */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold;
+  }
+}
+
+@layer components {
+  .btn-hero {
+    @apply bg-[hsl(var(--hero-button))] text-[hsl(var(--hero-button-foreground))] hover:bg-[hsl(var(--hero-button-hover))] 
+           font-bold py-4 px-8 rounded-full shadow-[var(--shadow-glow)] transition-[var(--transition-bounce)] 
+           hover:scale-105 hover:shadow-xl;
+  }
+  
+  .card-service {
+    @apply bg-card rounded-3xl p-6 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-soft)] 
+           transition-[var(--transition-smooth)] hover:scale-[1.02];
+  }
+
+  /* Ensure LazyImage inside service cards truly fills and centers */
+  .service-card-img {
+    position: relative;
+  }
+  .service-card-img picture,
+  .service-card-img img {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    display: block;
+  }
+  .service-card-img img {
+    transition: transform 300ms ease;
+  }
+  .group:hover .service-card-img img {
+    transform: scale(1.05);
+  }
+  
+  .trust-badge {
+    @apply bg-[hsl(var(--trust-bg))] text-[hsl(var(--trust-foreground))] px-4 py-2 rounded-full 
+           font-semibold shadow-sm;
+  }
+  
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .gradient-services {
+    background: var(--gradient-services);
+  }
+  
+  .gradient-cta {
+    background: var(--gradient-cta);
+  }
+}

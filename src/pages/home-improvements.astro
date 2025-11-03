@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
+import { Button } from '../components/ui/button';
+import { Phone } from 'lucide-react';
+
+const title = "Home Improvements Ayrshire & Glasgow | Professional Renovation Services | RB Joinery";
+const description = "Professional home improvement and renovation services in Ayrshire and Glasgow. Complete renovation solutions. Free quotes available.";
+const canonical = "https://rbjoinery.com/home-improvements";
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Navigation client:load />
+  
+  <main class="min-h-screen">
+    <section class="relative bg-gradient-to-br from-blue-50 to-green-50 py-20 px-4">
+      <div class="container mx-auto max-w-6xl">
+        <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 text-center">
+          Home Improvements Ayrshire & Glasgow
+        </h1>
+        <p class="text-xl text-gray-600 text-center mb-8 max-w-3xl mx-auto">
+          Professional home improvement and renovation services.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button 
+            onClick={() => window.location.href = '/#contact-form'}
+            className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg font-semibold rounded-full"
+            client:load
+          >
+            Get Free Quote
+          </Button>
+          <Button 
+            onClick={() => window.location.href = 'tel:+447927726622'}
+            variant="outline"
+            className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-8 py-4 text-lg font-semibold rounded-full"
+            client:load
+          >
+            <Phone class="w-5 h-5 mr-2" />
+            Call 07927 726622
+          </Button>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer client:load />
+  
+  <script>
+    if (typeof window !== 'undefined') {
+      window.scrollTo(0, 0);
+    }
+  </script>
+</Layout>
+
+
