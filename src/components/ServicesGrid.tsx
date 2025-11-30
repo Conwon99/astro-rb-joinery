@@ -46,7 +46,7 @@ const ServicesGrid = () => {
   const handleQuoteClick = (serviceTitle: string) => {
     trackQuoteRequest('services_grid_quote_button', [serviceTitle]);
     trackServiceClick(serviceTitle, 'services_grid');
-    document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+    window.location.href = "/contact";
   };
 
   return (

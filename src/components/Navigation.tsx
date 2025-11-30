@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Phone } from "lucide-react";
 import { useState, useEffect } from "react";
 import LazyImage from "@/components/LazyImage";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 import { trackPhoneCall, trackNavigation, trackQuoteRequest } from "@/utils/analytics";
 
 const Navigation = () => {
@@ -49,12 +50,7 @@ const Navigation = () => {
 
   const handleQuoteClick = () => {
     trackQuoteRequest('navigation_button', []);
-    if (isHomePage) {
-      scrollToSection("contact-form");
-    } else {
-      // Navigate to homepage and scroll to contact form
-      window.location.href = "/#contact-form";
-    }
+    window.location.href = "/contact";
   };
 
   const handleNavClick = (sectionId: string) => {
@@ -71,7 +67,7 @@ const Navigation = () => {
     { label: "Services", onClick: () => handleNavClick("services"), isLink: false },
     { label: "Gallery", onClick: () => handleNavClick("gallery"), isLink: false },
     { label: "FAQ", onClick: () => handleNavClick("faq"), isLink: false },
-    { label: "Contact", onClick: () => handleNavClick("contact-form"), isLink: false },
+    { label: "Contact", href: "/contact", isLink: true },
   ];
 
   return (
@@ -96,26 +92,46 @@ const Navigation = () => {
           {/* Tablet Navigation */}
           <div className="hidden md:flex lg:hidden items-center space-x-4">
             {navItems.slice(0, 3).map((item) => (
-              <button
-                key={item.label}
-                onClick={item.onClick}
-                className="text-white hover:text-green-400 transition-colors duration-200 font-medium text-sm"
-              >
-                {item.label}
-              </button>
+              item.isLink ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-white hover:text-green-400 transition-colors duration-200 font-medium text-sm"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <button
+                  key={item.label}
+                  onClick={item.onClick}
+                  className="text-white hover:text-green-400 transition-colors duration-200 font-medium text-sm"
+                >
+                  {item.label}
+                </button>
+              )
             ))}
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6">
             {navItems.map((item) => (
-              <button
-                key={item.label}
-                onClick={item.onClick}
-                className="text-white hover:text-green-400 transition-colors duration-200 font-medium"
-              >
-                {item.label}
-              </button>
+              item.isLink ? (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-white hover:text-green-400 transition-colors duration-200 font-medium"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <button
+                  key={item.label}
+                  onClick={item.onClick}
+                  className="text-white hover:text-green-400 transition-colors duration-200 font-medium"
+                >
+                  {item.label}
+                </button>
+              )
             ))}
           </div>
 
@@ -136,8 +152,9 @@ const Navigation = () => {
             </Button>
             <Button
               onClick={handleQuoteClick}
-              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-full font-semibold text-sm"
+              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-2"
             >
+              <WhatsAppIcon className="w-4 h-4" />
               Quote
             </Button>
           </div>
@@ -159,9 +176,10 @@ const Navigation = () => {
             </Button>
             <Button
               onClick={handleQuoteClick}
-              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full font-semibold"
+              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold flex items-center gap-2"
             >
-              Free Quote
+              <WhatsAppIcon className="w-5 h-5" />
+              Get A Free Quote
             </Button>
           </div>
 
@@ -183,13 +201,24 @@ const Navigation = () => {
           <div className="lg:hidden bg-black border-t border-white/10 shadow-lg">
             <div className="py-4 space-y-4">
               {navItems.map((item) => (
-                <button
-                  key={item.label}
-                  onClick={item.onClick}
-                  className="block w-full text-left px-4 py-2 text-white hover:text-green-400 hover:bg-white/10 transition-colors duration-200"
-                >
-                  {item.label}
-                </button>
+                item.isLink ? (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="block w-full text-left px-4 py-2 text-white hover:text-green-400 hover:bg-white/10 transition-colors duration-200"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <button
+                    key={item.label}
+                    onClick={item.onClick}
+                    className="block w-full text-left px-4 py-2 text-white hover:text-green-400 hover:bg-white/10 transition-colors duration-200"
+                  >
+                    {item.label}
+                  </button>
+                )
               ))}
               <div className="px-4 pt-4 border-t border-gray-200 space-y-3">
                 <Button
@@ -207,9 +236,10 @@ const Navigation = () => {
                 </Button>
                 <Button
                   onClick={handleQuoteClick}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white rounded-lg flex items-center justify-center gap-2"
                 >
-                  Get Free Quote
+                  <WhatsAppIcon className="w-5 h-5" />
+                  Get A Free Quote
                 </Button>
               </div>
             </div>

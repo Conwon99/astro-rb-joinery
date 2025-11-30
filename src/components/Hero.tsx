@@ -85,8 +85,8 @@ const Hero = () => {
   };
 
   const handleMessengerClick = () => {
-    trackWhatsAppClick('hero_whatsapp_button');
-    window.open("https://wa.me/447927726622", "_blank");
+    trackQuoteRequest('hero_quote_button', []);
+    window.location.href = "/contact";
   };
 
   return (
@@ -133,14 +133,13 @@ const Hero = () => {
 
             {/* Quick Contact */}
             <div className="pt-4 border-t border-white/20">
-              <p className="text-white text-base sm:text-lg font-semibold mb-3 text-left px-2">Give us a call or a Whatsapp for a <span className="font-bold text-green-400">FREE QUOTE</span></p>
               <div className="flex flex-col sm:flex-row gap-4 w-full justify-center lg:justify-start px-2">
               <Button 
                 onClick={handleMessengerClick}
-                className="inline-flex items-center justify-center gap-3 px-6 sm:px-10 py-6 sm:py-8 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-base sm:text-lg"
+                className="inline-flex items-center justify-center gap-3 px-6 sm:px-10 py-6 sm:py-8 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 text-base sm:text-lg relative overflow-hidden shiny-button"
               >
-                <WhatsAppIcon className="w-8 h-8" />
-                WhatsApp
+                <WhatsAppIcon className="w-8 h-8 relative z-10" />
+                <span className="relative z-10">Get A Free Quote</span>
               </Button>
               <Button 
                 onClick={handleCallClick}
