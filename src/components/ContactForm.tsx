@@ -27,7 +27,8 @@ const ContactForm = () => {
           name: formData.name,
           phone: formData.phone,
           message: formData.message,
-          _subject: 'Contact Form Submission from Website'
+          website: 'https://rbjoinery.com/',
+          _subject: 'Contact Form Submission from https://rbjoinery.com/'
         }),
       });
 
@@ -35,16 +36,8 @@ const ContactForm = () => {
         trackQuoteRequest('contact_page_form', []);
         trackFormInteraction('contact_form', { status: 'submit_success' });
         
-        toast({
-          title: "Message sent!",
-          description: "Thank you for contacting us. We'll respond within 24 hours.",
-        });
-        
-        setFormData({
-          name: '',
-          phone: '',
-          message: ''
-        });
+        // Redirect to a dedicated thank-you page with a clear link back home.
+        window.location.href = "/thank-you";
       } else {
         throw new Error('Failed to send message');
       }

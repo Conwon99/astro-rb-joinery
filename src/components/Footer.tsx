@@ -43,27 +43,32 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3 text-white">
               <li>
-                <a href="#services" className="hover:text-gray-300 transition-colors">
+                <a href="/services" className="hover:text-gray-300 transition-colors">
+                  • All services
+                </a>
+              </li>
+              <li>
+                <a href="/house-extensions" className="hover:text-gray-300 transition-colors">
                   • House Extensions
                 </a>
               </li>
               <li>
-                <a href="#services" className="hover:text-gray-300 transition-colors">
+                <a href="/loft-conversions" className="hover:text-gray-300 transition-colors">
                   • Loft Conversions
                 </a>
               </li>
               <li>
-                <a href="#services" className="hover:text-gray-300 transition-colors">
+                <a href="/garden-rooms" className="hover:text-gray-300 transition-colors">
                   • Garden Rooms
                 </a>
               </li>
               <li>
-                <a href="#services" className="hover:text-gray-300 transition-colors">
+                <a href="/kitchen-installation" className="hover:text-gray-300 transition-colors">
                   • Kitchen Installation
                 </a>
               </li>
               <li>
-                <a href="#services" className="hover:text-gray-300 transition-colors">
+                <a href="/home-improvements" className="hover:text-gray-300 transition-colors">
                   • Home Improvements
                 </a>
               </li>

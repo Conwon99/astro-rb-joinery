@@ -1,0 +1,46 @@
+---
+/**
+ * Fixed bottom-right “Message” CTA — static HTML so it always appears in mobile
+ * devtools without waiting for JS. Hidden from lg (1024px) and up.
+ */
+---
+
+<a
+  id="mobile-contact-fab"
+  href="/contact"
+  class="fixed bottom-[max(1.25rem,env(safe-area-inset-bottom,0px))] right-[max(1rem,env(safe-area-inset-right,0px))] z-[9999] flex items-center gap-2 rounded-full bg-gradient-to-br from-green-500 to-green-700 px-4 py-3 text-sm font-semibold text-white shadow-lg ring-2 ring-white/20 transition-transform hover:scale-[1.02] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-400 lg:hidden"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="h-5 w-5 shrink-0"
+    aria-hidden="true"
+  >
+    <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
+  </svg>
+  Message
+</a>
+
+<script is:inline>
+  (function () {
+    var el = document.getElementById("mobile-contact-fab");
+    if (!el) return;
+    el.addEventListener("click", function () {
+      try {
+        if (typeof window.gtag === "function") {
+          window.gtag("event", "navigation_click", { section_id: "mobile_contact_fab" });
+        }
+        if (Array.isArray(window.dataLayer)) {
+          window.dataLayer.push({ event: "navigation_click", section_id: "mobile_contact_fab" });
+        }
+      } catch (_) {}
+    });
+  })();
+</script>

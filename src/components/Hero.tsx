@@ -45,7 +45,8 @@ const Hero = () => {
           email: formData.email,
           service: formData.service,
           message: formData.message,
-          _subject: 'Free Quote Request from Website'
+          website: 'https://rbjoinery.com/',
+          _subject: 'Free Quote Request from https://rbjoinery.com/'
         }),
       });
 
@@ -53,19 +54,9 @@ const Hero = () => {
         // Track successful form submission
         trackQuoteRequest('contact_form', [formData.service]);
         trackFormInteraction('quote_form', 'submit_success');
-        
-        toast({
-          title: "Quote request sent!",
-          description: "Thank you for your request. We'll respond within 24 hours.",
-        });
-        
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          service: '',
-          message: ''
-        });
+
+        // Redirect to a dedicated thank-you page with a clear link back home.
+        window.location.href = "/thank-you";
       } else {
         throw new Error('Failed to send message');
       }

@@ -1,54 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { trackQuoteRequest, trackServiceClick } from "@/utils/analytics";
-
-type ServiceCard = {
-  title: string;
-  description: string;
-  features: string[];
-  image: string;
-};
-
-const SERVICE_CARDS: ServiceCard[] = [
-  {
-    title: "House Extensions",
-    description: "Professional house extensions including single and two-storey additions",
-    features: ["Single storey extensions", "Two storey extensions", "Planning permission", "Design consultation"],
-    image: "/Services/House extension..jpg",
-  },
-  {
-    title: "Loft Conversions",
-    description: "Transform your loft space into beautiful, functional rooms",
-    features: ["Dormer conversions", "Velux conversions", "Bespoke designs", "Planning support"],
-    image: "/Services/Loft..jpg",
-  },
-  {
-    title: "Garden Rooms",
-    description: "Create the perfect outdoor living space with bespoke garden rooms",
-    features: ["Home offices", "Garden studios", "Garden gyms", "Entertainment spaces"],
-    image: "/Services/garden room.webp",
-  },
-  {
-    title: "Kitchen Installation",
-    description: "Professional kitchen design, supply, and installation services",
-    features: ["Kitchen design", "Supply & fitting", "Bespoke kitchens", "Renovation services"],
-    image: "/Services/Kitchen installation..jpg",
-  },
-  {
-    title: "Home Improvements",
-    description: "Complete home improvement and renovation services",
-    features: ["Complete renovations", "Structural work", "Interior upgrades", "Property maintenance"],
-    image: "/Services/home improv.jpg",
-  },
-];
+import { trackServiceClick } from "@/utils/analytics";
+import { SERVICES } from "@/data/services";
 
 const ServicesGrid = () => {
-  const handleQuoteClick = (serviceTitle: string) => {
-    trackQuoteRequest('services_grid_quote_button', [serviceTitle]);
-    trackServiceClick(serviceTitle, 'services_grid');
-    window.location.href = "/contact";
-  };
-
   return (
     <section id="services" className="py-20 px-4 bg-gradient-to-b from-background to-[hsl(var(--muted))]">
       <div className="container mx-auto max-w-7xl">
@@ -65,7 +20,7 @@ const ServicesGrid = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {SERVICE_CARDS.map((service) => (
+          {SERVICES.map((service) => (
             <article
               key={service.title}
               className="group overflow-hidden flex flex-col rounded-3xl bg-card shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-soft)] transition-[var(--transition-smooth)] hover:scale-[1.02] h-full"
@@ -99,9 +54,17 @@ const ServicesGrid = () => {
                 </div>
 
                 <div className="mt-6">
-                  <Button onClick={() => handleQuoteClick(service.title)} className="w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-semibold rounded-full">
-                    Request a Quote
-                    <ArrowRight className="w-4 h-4 ml-2" />
+                  <Button
+                    asChild
+                    className="w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-semibold rounded-full"
+                  >
+                    <a
+                      href={service.href}
+                      onClick={() => trackServiceClick(service.title, "services_grid")}
+                    >
+                      Learn more
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </a>
                   </Button>
                 </div>
               </div>
@@ -114,5 +77,3 @@ const ServicesGrid = () => {
 };
 
 export default ServicesGrid;
-
-

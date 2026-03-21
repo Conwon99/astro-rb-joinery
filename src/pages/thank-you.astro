@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
+
+const title = "Thank You | RB Joinery";
+const description = "Thanks for your enquiry. We'll get back to you shortly.";
+const canonical = "https://rbjoinery.com/thank-you";
+---
+
+<Layout title={title} description={description} canonical={canonical} robots="noindex, nofollow">
+  <Navigation client:load />
+
+  <main class="min-h-screen bg-gradient-to-b from-background to-[hsl(var(--muted))] py-20 px-4">
+    <div class="container mx-auto max-w-2xl">
+      <div class="bg-white rounded-2xl shadow-lg p-6 md:p-10 text-center">
+        <h1 class="font-display text-4xl md:text-5xl font-bold text-[hsl(var(--asphalt-grey))] mb-4">
+          Thank You
+        </h1>
+        <p class="text-xl text-[hsl(var(--asphalt-grey))] mb-8">
+          Your submission has been received. We will respond as soon as possible.
+        </p>
+
+        <div class="flex justify-center">
+          <a
+            href="/"
+            class="inline-block bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg font-semibold rounded-full transition-colors duration-200"
+          >
+            Back to Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer client:load />
+</Layout>
+
