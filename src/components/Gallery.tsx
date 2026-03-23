@@ -3,7 +3,14 @@ import { ChevronLeft, ChevronRight, X, Facebook } from "lucide-react";
 import LazyImage from "@/components/LazyImage";
 import { trackGalleryInteraction, trackExternalLink } from "@/utils/analytics";
 
-const Gallery = () => {
+const DEFAULT_GALLERY_LEAD =
+  "Take a look at some of our recent joinery and building projects across Glasgow and Ayrshire";
+
+type GalleryProps = {
+  leadText?: string;
+};
+
+const Gallery = ({ leadText = DEFAULT_GALLERY_LEAD }: GalleryProps) => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
   const galleryImages = [
@@ -58,7 +65,7 @@ const Gallery = () => {
             <div className="flex-1 h-px bg-[hsl(var(--asphalt-grey))]"></div>
           </div>
           <p className="text-xl text-[hsl(var(--asphalt-grey))] max-w-3xl">
-            Take a look at some of our recent joinery and building projects across Glasgow and Ayrshire
+            {leadText}
           </p>
         </div>
 

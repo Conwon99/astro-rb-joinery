@@ -1,11 +1,11 @@
 # Astro static site - no SPA redirects needed
 # All pages are pre-generated as static HTML files
 
-# Only redirect old URLs if they exist
-# Uncomment and update these if you have old URLs to redirect:
-# /old-url    /new-url    301
+# Legacy flat pages removed in favour of /[location]/ dynamic routes
+/ayrshire    /locations    301
+/ayrshire/   /locations/   301
 
 # Ensure proper handling of static assets
 /robots.txt      /robots.txt   200
-/sitemap.xml     /sitemap.xml  200
+/sitemap.xml       /sitemap-index.xml  301
 /favicon.ico     /favicon.ico  200

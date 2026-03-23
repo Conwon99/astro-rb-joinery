@@ -2,33 +2,44 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import ContactForm from '../components/ContactForm';
+import ServicePageContactSplit from '../components/ServicePageContactSplit';
+import { SERVICES } from '../data/services';
 
 const title = "Contact Us | RB Joinery - Get Your Free Quote";
 const description = "Contact RB Joinery for professional joinery and building services in Ayrshire and Glasgow. Get your free quote today.";
 const canonical = "https://rbjoinery.com/contact";
+
+/** Same hero image as the House Extensions service page — matches that page’s contact form block. */
+const houseExtensions = SERVICES.find((s) => s.href === "/house-extensions")!;
+const contactBackgroundImage = houseExtensions.image;
 ---
 
-<Layout title={title} description={description} canonical={canonical}>
+<Layout title={title} description={description} canonical={canonical} hideScrollbar={true}>
   <Navigation client:load />
-  
-  <main class="min-h-screen bg-gradient-to-b from-background to-[hsl(var(--muted))] py-20 px-4">
-    <div class="container mx-auto max-w-2xl">
-      <div class="text-center mb-12">
-        <h1 class="font-display text-4xl md:text-5xl font-bold text-[hsl(var(--asphalt-grey))] mb-4">
-          Contact Us
-        </h1>
-        <p class="text-xl text-[hsl(var(--asphalt-grey))]">
-          Get in touch for your free, no-obligation quote
-        </p>
-      </div>
 
-      <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-        <ContactForm client:load />
-      </div>
-    </div>
-  </main>
-  
-  <Footer client:load />
+  <div class="flex min-h-dvh flex-col pt-16">
+    <main class="flex flex-1 flex-col">
+      <section class="px-4 pt-16 md:pt-20">
+        <div class="container mx-auto max-w-4xl text-center">
+          <h1 class="font-display text-4xl font-bold text-[hsl(var(--asphalt-grey))] md:text-5xl">
+            Contact Us
+          </h1>
+          <p class="mt-4 text-lg text-[hsl(var(--asphalt-grey))] md:text-xl">
+            Get in touch for your free, no-obligation quote.
+          </p>
+        </div>
+      </section>
+
+      <ServicePageContactSplit
+        client:load
+        backgroundImage={contactBackgroundImage}
+        heading="Get in touch for your free, no-obligation quote"
+        serviceLabel="Contact"
+        sectionId="contact"
+        compact={true}
+      />
+    </main>
+
+    <Footer client:load />
+  </div>
 </Layout>
-

@@ -3,11 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { SERVICES } from '../data/services';
+import { servicesHub } from '../content/site';
 
-const title =
-  'Our Services | House Extensions, Lofts, Garden Rooms & More | RB Joinery';
-const description =
-  'Joinery and building services in Ayrshire and Glasgow: house extensions, loft conversions, garden rooms, kitchen installation, and home improvements.';
+const title = servicesHub.metaTitle;
+const description = servicesHub.metaDescription;
 const canonical = 'https://rbjoinery.com/services';
 ---
 
@@ -22,11 +21,10 @@ const canonical = 'https://rbjoinery.com/services';
         <h1
           class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6"
         >
-          Our Services
+          {servicesHub.h1}
         </h1>
         <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          Professional joinery and building work across Ayrshire and Glasgow.
-          Choose a service below to learn more.
+          {servicesHub.lead}
         </p>
       </div>
     </section>

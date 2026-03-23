@@ -34,7 +34,7 @@ User-agent: LinkedInBot
 Allow: /
 
 # Sitemap location
-Sitemap: https://rbjoinery.com/sitemap.xml
+Sitemap: https://rbjoinery.com/sitemap-index.xml
 
 # Crawl delay (helps with server load)
 Crawl-delay: 1

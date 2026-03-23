@@ -1,17 +1,20 @@
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone, ChevronDown } from "lucide-react";
+import { Menu, X, Phone, ChevronDown, ArrowUpRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import LazyImage from "@/components/LazyImage";
-import WhatsAppIcon from "@/components/WhatsAppIcon";
 import { trackPhoneCall, trackNavigation, trackQuoteRequest } from "@/utils/analytics";
 import { SERVICES } from "@/data/services";
+import { LOCATIONS } from "@/data/locations";
 import { cn } from "@/lib/utils";
+import { useTrackingPhone } from "@/hooks/useTrackingPhone";
 
 const Navigation = () => {
+  const { display: phoneDisplay, telHref } = useTrackingPhone();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHomePage, setIsHomePage] = useState(true);
   const [servicesExpanded, setServicesExpanded] = useState(false);
+  const [locationsExpanded, setLocationsExpanded] = useState(false);
 
   useEffect(() => {
     setIsHomePage(window.location.pathname === "/");
@@ -27,6 +30,7 @@ const Navigation = () => {
   useEffect(() => {
     if (!isMenuOpen) {
       setServicesExpanded(false);
+      setLocationsExpanded(false);
     }
   }, [isMenuOpen]);
 
@@ -48,7 +52,7 @@ const Navigation = () => {
 
   const handleCallClick = () => {
     trackPhoneCall("navigation_call_button");
-    window.location.href = "tel:+447927726622";
+    window.location.href = telHref;
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -107,6 +111,38 @@ const Navigation = () => {
     </div>
   );
 
+  const LocationsDropdown = ({ compact }: { compact?: boolean }) => (
+    <div className="relative group">
+      <a
+        href="/locations"
+        className={compact ? servicesLinkClassSm : servicesLinkClass}
+        onClick={() => trackNavigation("locations_hub")}
+      >
+        Locations
+        <ChevronDown className="w-4 h-4 opacity-80" aria-hidden />
+      </a>
+      <div
+        className="absolute left-0 top-full z-[100] -mt-px min-w-[200px] pt-2 opacity-0 pointer-events-none transition-opacity duration-200 group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto"
+        role="menu"
+        aria-label="Town pages"
+      >
+        <div className="rounded-lg border border-white/10 bg-black py-2 shadow-lg">
+          {LOCATIONS.map((loc) => (
+            <a
+              key={loc.slug}
+              href={`/${loc.slug}`}
+              role="menuitem"
+              className="block px-4 py-2 text-sm text-white hover:bg-white/10 hover:text-green-400"
+              onClick={() => trackNavigation(`nav_location_${loc.slug}`)}
+            >
+              {loc.name}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <nav
       className={`fixed top-0 z-50 w-full overflow-visible transition-all duration-300 ${
@@ -116,7 +152,7 @@ const Navigation = () => {
       }`}
     >
       <div className="container mx-auto max-w-7xl px-4">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-20 items-center justify-between md:h-24 lg:h-28">
           {/* Logo — links to homepage */}
           <div className="flex items-center">
             <a
@@ -128,7 +164,7 @@ const Navigation = () => {
                 setIsMenuOpen(false);
               }}
             >
-              <div className="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24">
+              <div className="h-[3.75rem] w-[3.75rem] md:h-[4.5rem] md:w-[4.5rem] lg:h-24 lg:w-24">
                 <LazyImage
                   src="/rblogo - Edited.png"
                   alt="RB Joinery logo"
@@ -148,6 +184,7 @@ const Navigation = () => {
               Home
             </button>
             <ServicesDropdown compact />
+            <LocationsDropdown compact />
             <button
               type="button"
               onClick={() => handleNavClick("gallery")}
@@ -167,6 +204,7 @@ const Navigation = () => {
               Home
             </button>
             <ServicesDropdown />
+            <LocationsDropdown />
             <button
               type="button"
               onClick={() => handleNavClick("gallery")}
@@ -202,16 +240,19 @@ const Navigation = () => {
               </div>
               <div className="flex flex-col items-start">
                 <span className="text-xs font-medium text-gray-300">CALL</span>
-                <span className="text-lg font-bold text-white">07927 726622</span>
+                <span className="text-lg font-bold text-white">{phoneDisplay}</span>
               </div>
             </Button>
-            <Button
+            <button
+              type="button"
               onClick={handleQuoteClick}
-              className="flex items-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700"
+              className="group inline-flex w-fit shrink-0 items-center gap-1 rounded-full bg-green-600 py-1.5 pl-5 pr-1.5 text-left text-xs font-bold uppercase tracking-wide text-white shadow-lg transition-colors hover:bg-green-700 focus-visible:outline focus-visible:ring-2 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
-              <WhatsAppIcon className="h-4 w-4" />
-              Quote
-            </Button>
+              <span className="pr-1">Get free quote</span>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-800/90 transition-transform group-hover:scale-105">
+                <ArrowUpRight className="h-4 w-4" aria-hidden />
+              </span>
+            </button>
           </div>
 
           {/* Desktop CTA */}
@@ -226,21 +267,30 @@ const Navigation = () => {
               </div>
               <div className="flex flex-col items-start">
                 <span className="text-sm font-medium text-gray-300">CALL US NOW</span>
-                <span className="text-xl font-bold text-white lg:text-2xl">07927 726622</span>
+                <span className="text-xl font-bold text-white lg:text-2xl">{phoneDisplay}</span>
               </div>
             </Button>
-            <Button
+            <button
+              type="button"
               onClick={handleQuoteClick}
-              className="flex items-center gap-2 rounded-lg bg-green-600 px-6 py-2 font-semibold text-white hover:bg-green-700"
+              className="group inline-flex w-fit items-center gap-1 rounded-full bg-green-600 py-2 pl-8 pr-2 text-left font-bold uppercase tracking-wide text-white shadow-lg transition-colors hover:bg-green-700 focus-visible:outline focus-visible:ring-2 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
-              <WhatsAppIcon className="h-5 w-5" />
-              Get A Free Quote
-            </Button>
+              <span className="pr-2">Get free quote</span>
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-800/90 transition-transform group-hover:scale-105">
+                <ArrowUpRight className="h-6 w-6" aria-hidden />
+              </span>
+            </button>
           </div>
 
           {/* Mobile/Tablet Menu Button */}
-          <button type="button" className="p-2 lg:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X className="h-6 w-6 text-white" /> : <Menu className="h-6 w-6 text-white" />}
+          <button
+            type="button"
+            className="rounded-md p-2.5 lg:hidden md:p-3"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-expanded={isMenuOpen}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {isMenuOpen ? <X className="h-7 w-7 text-white" /> : <Menu className="h-7 w-7 text-white" />}
           </button>
         </div>
 
@@ -298,6 +348,48 @@ const Navigation = () => {
                 )}
               </div>
 
+              <div className="border-b border-white/5">
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between px-4 py-2 text-left text-white transition-colors duration-200 hover:bg-white/10 hover:text-green-400"
+                  onClick={() => setLocationsExpanded((v) => !v)}
+                  aria-expanded={locationsExpanded}
+                >
+                  <span>Locations</span>
+                  <ChevronDown
+                    className={cn("h-4 w-4 transition-transform", locationsExpanded && "rotate-180")}
+                    aria-hidden
+                  />
+                </button>
+                {locationsExpanded && (
+                  <div className="space-y-1 border-l border-white/10 pb-3 pl-6">
+                    <a
+                      href="/locations"
+                      className="block py-2 text-sm text-white/90 transition-colors hover:text-green-400"
+                      onClick={() => {
+                        trackNavigation("locations_hub");
+                        setIsMenuOpen(false);
+                      }}
+                    >
+                      All locations
+                    </a>
+                    {LOCATIONS.map((loc) => (
+                      <a
+                        key={loc.slug}
+                        href={`/${loc.slug}`}
+                        className="block py-2 text-sm text-white/90 transition-colors hover:text-green-400"
+                        onClick={() => {
+                          trackNavigation(`nav_location_${loc.slug}`);
+                          setIsMenuOpen(false);
+                        }}
+                      >
+                        {loc.name}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               <button
                 type="button"
                 onClick={() => handleNavClick("gallery")}
@@ -334,16 +426,22 @@ const Navigation = () => {
                   </div>
                   <div className="flex flex-col items-start">
                     <span className="text-sm font-medium text-gray-300">CALL US NOW</span>
-                    <span className="text-2xl font-bold text-white md:text-3xl">07927 726622</span>
+                    <span className="text-2xl font-bold text-white md:text-3xl">{phoneDisplay}</span>
                   </div>
                 </Button>
-                <Button
-                  onClick={handleQuoteClick}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleQuoteClick();
+                    setIsMenuOpen(false);
+                  }}
+                  className="group inline-flex w-full items-center justify-center gap-1 rounded-full bg-green-600 py-2 pl-6 pr-2 font-bold uppercase tracking-wide text-white shadow-lg transition-colors hover:bg-green-700 focus-visible:outline focus-visible:ring-2 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
-                  <WhatsAppIcon className="h-5 w-5" />
-                  Get A Free Quote
-                </Button>
+                  <span className="pr-2">Get free quote</span>
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-800/90 transition-transform group-hover:scale-105">
+                    <ArrowUpRight className="h-6 w-6" aria-hidden />
+                  </span>
+                </button>
               </div>
             </div>
           </div>

@@ -18,6 +18,7 @@ export default {
 			fontFamily: {
 				'sans': ['Poppins', 'system-ui', 'sans-serif'],
 				'display': ['Outfit', 'Poppins', 'system-ui', 'sans-serif'],
+				'figtree': ['Figtree', 'system-ui', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

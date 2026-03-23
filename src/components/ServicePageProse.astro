@@ -1,0 +1,84 @@
+---
+import type { ServicePageContent } from "../content/site";
+import ServicePageMidCta from "./ServicePageMidCta.astro";
+
+interface Props {
+  content: ServicePageContent;
+}
+
+const { content } = Astro.props;
+
+const midCtaAfterIndex = 2;
+const showMidCta = content.sections.length > 3;
+---
+
+<div class="service-page-prose">
+  {
+    content.sections.map((section, i) => (
+      <>
+        <section
+          class:list={[
+            "px-4 py-16 md:py-20 lg:py-24",
+            i % 2 === 0 ? "bg-white" : "bg-zinc-50",
+          ]}
+          aria-labelledby={`service-section-${i}-h2`}
+        >
+          <div class="container mx-auto max-w-6xl">
+            <h2
+              id={`service-section-${i}-h2`}
+              class="font-display mb-6 max-w-4xl text-3xl font-bold leading-tight tracking-tight text-neutral-900 md:mb-8 md:text-4xl lg:text-[2.25rem]"
+            >
+              {section.h2}
+            </h2>
+            <div class="max-w-4xl space-y-5">
+              {section.paragraphs.map((p) => (
+                <p
+                  class="text-lg leading-relaxed text-neutral-700 md:text-xl md:leading-relaxed [&_a]:font-medium [&_a]:text-green-700 [&_a]:underline hover:[&_a]:text-green-800"
+                  set:html={p}
+                />
+              ))}
+            </div>
+            {section.bullets && section.bullets.length > 0 && (
+              <ul class="mb-2 mt-8 max-w-4xl list-disc space-y-3 pl-6 text-lg leading-relaxed text-neutral-700 marker:text-green-600 md:text-xl">
+                {section.bullets.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            )}
+            {section.imageRow && section.imageRow.length > 0 && (
+              <div class="mt-10 grid grid-cols-1 gap-4 md:mt-12 md:grid-cols-2 md:gap-6 lg:gap-8">
+                {section.imageRow.map((img) => (
+                  <figure class="overflow-hidden rounded-2xl shadow-md ring-1 ring-black/5">
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      class="aspect-[4/3] w-full object-cover"
+                      width="800"
+                      height="600"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                ))}
+              </div>
+            )}
+            {section.subsections?.map((sub) => (
+              <div class="mt-10 max-w-4xl border-l-4 border-green-600/40 pl-5 md:mt-12 md:pl-6">
+                <h3 class="font-display mb-4 text-xl font-bold text-neutral-900 md:text-2xl">
+                  {sub.h3}
+                </h3>
+                {sub.paragraphs.map((p) => (
+                  <p
+                    class="mb-3 text-base leading-relaxed text-neutral-700 last:mb-0 md:text-lg [&_a]:font-medium [&_a]:text-green-700 [&_a]:underline hover:[&_a]:text-green-800"
+                    set:html={p}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+        {showMidCta && i === midCtaAfterIndex && <ServicePageMidCta />}
+      </>
+    ))
+  }
+</div>

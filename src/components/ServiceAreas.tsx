@@ -1,20 +1,110 @@
+import { useEffect, useState } from "react";
 import { MapPin } from "lucide-react";
-import WhatsAppIcon from "@/components/WhatsAppIcon";
-import { trackPhoneCall, trackWhatsAppClick } from "@/utils/analytics";
+import { AYRSHIRE_GLASGOW_MAP_BOUNDS, AYRSHIRE_GLASGOW_POLYGON } from "@/data/serviceAreaMap";
+import { trackPhoneCall } from "@/utils/analytics";
+import { useTrackingPhone } from "@/hooks/useTrackingPhone";
 
-const ServiceAreas = () => {
-  const serviceAreas = [
-    "Ayr",
-    "Glasgow",
-    "Kilmarnock",
-    "Irvine",
-    "Troon",
-    "Prestwick",
-    "Ardrossan",
-    "Saltcoats",
-    "Largs",
-    "Girvan"
-  ];
+const serviceAreas = [
+  "Ayr",
+  "Glasgow",
+  "Kilmarnock",
+  "Irvine",
+  "Troon",
+  "Prestwick",
+  "Ardrossan",
+  "Saltcoats",
+  "Largs",
+  "Girvan",
+];
+
+type ReactLeafletMap = Pick<
+  typeof import("react-leaflet"),
+  "MapContainer" | "TileLayer" | "Polygon"
+>;
+
+/**
+ * Loads Leaflet + react-leaflet only in the browser so Astro SSR never touches `window`.
+ */
+function ServiceAreasOpenStreetMap({ mapAriaLabel }: { mapAriaLabel: string }) {
+  const [mapLib, setMapLib] = useState<ReactLeafletMap | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      await import("leaflet/dist/leaflet.css");
+      const rl = await import("react-leaflet");
+      if (!cancelled) {
+        setMapLib({
+          MapContainer: rl.MapContainer,
+          TileLayer: rl.TileLayer,
+          Polygon: rl.Polygon,
+        });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (!mapLib) {
+    return (
+      <div
+        className="flex h-full min-h-[320px] w-full items-center justify-center rounded-xl bg-muted/80 text-sm text-muted-foreground"
+        aria-busy="true"
+        aria-live="polite"
+      >
+        Loading map…
+      </div>
+    );
+  }
+
+  const { MapContainer, TileLayer, Polygon } = mapLib;
+
+  return (
+    <div
+      className="h-full min-h-[320px] w-full overflow-hidden rounded-xl"
+      role="img"
+      aria-label={mapAriaLabel}
+    >
+      <MapContainer
+        bounds={AYRSHIRE_GLASGOW_MAP_BOUNDS}
+        className="service-areas-map z-0 h-full w-full"
+        scrollWheelZoom={false}
+        attributionControl
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Polygon
+          positions={AYRSHIRE_GLASGOW_POLYGON}
+          pathOptions={{
+            color: "hsl(var(--dark-green))",
+            fillColor: "hsl(var(--primary-green))",
+            fillOpacity: 0.22,
+            weight: 2,
+          }}
+        />
+      </MapContainer>
+    </div>
+  );
+}
+
+const DEFAULT_INTRO =
+  "We proudly serve Ayrshire and Glasgow with expert joinery and building work. Contact us to confirm coverage for your specific location.";
+
+type ServiceAreasProps = {
+  introLead?: string;
+  mapAriaLabel?: string;
+  coverageTitle?: string;
+};
+
+const ServiceAreas = ({
+  introLead = DEFAULT_INTRO,
+  mapAriaLabel = "OpenStreetMap of west central Scotland with our Ayrshire and Glasgow service area highlighted.",
+  coverageTitle = "Ayrshire & Glasgow Coverage",
+}: ServiceAreasProps) => {
+  const { display: phoneDisplay, telHref } = useTrackingPhone();
 
   return (
     <section id="service-areas" className="py-20 px-4 bg-gradient-to-b from-background to-[hsl(var(--muted))] overflow-x-hidden">
@@ -27,33 +117,23 @@ const ServiceAreas = () => {
             <div className="flex-1 h-px bg-[hsl(var(--asphalt-grey))]"></div>
           </div>
           <p className="text-xl text-muted-foreground max-w-3xl">
-            We proudly serve Ayrshire and Glasgow with expert landscaping and building solutions. 
-            Contact us to confirm coverage for your specific location.
+            {introLead}
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Google Maps */}
+          {/* OpenStreetMap coverage */}
           <div className="relative">
             <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-4 border-2 border-primary/20">
-              <div className="aspect-square rounded-xl overflow-hidden shadow-lg">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2238.5!2d-4.2518!3d55.8642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x488f8b8b8b8b8b8b%3A0x8b8b8b8b8b8b8b8b!2sGlasgow%2C%20UK!5e0!3m2!1sen!2suk!4v1234567890123!5m2!1sen!2suk"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="RB Joinery - Ayrshire & Glasgow Coverage"
-                ></iframe>
+              <div className="aspect-square min-h-[280px] rounded-xl shadow-lg [&_.leaflet-control-container]:text-xs">
+                <ServiceAreasOpenStreetMap mapAriaLabel={mapAriaLabel} />
               </div>
               <div className="mt-4 text-center">
                 <h3 className="font-display font-bold text-xl text-primary mb-2">
-                  Ayrshire & Glasgow Coverage
+                  {coverageTitle}
                 </h3>
                 <p className="text-muted-foreground text-sm">
-                  Serving Ayrshire & Glasgow
+                  Map data &copy; OpenStreetMap contributors — area shown is our typical service region.
                 </p>
               </div>
             </div>
@@ -61,7 +141,6 @@ const ServiceAreas = () => {
 
           {/* Service areas list */}
           <div className="space-y-8">
-
             <div className="grid grid-cols-2 gap-4">
               {serviceAreas.map((area, index) => (
                 <div
@@ -81,26 +160,16 @@ const ServiceAreas = () => {
                 Need Service Outside These Areas?
               </h4>
               <p className="text-muted-foreground mb-4">
-                We may be able to help with services outside our main coverage area. 
+                We may be able to help with services outside our main coverage area.
                 Contact us to discuss your specific needs and we'll do our best to accommodate you.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
-                  href="tel:+447403725998"
-                  onClick={() => trackPhoneCall('service_areas_call_button')}
+                  href={telHref}
+                  onClick={() => trackPhoneCall("service_areas_call_button")}
                   className="inline-flex items-center justify-center px-6 py-3 bg-primary text-white rounded-full font-semibold hover:bg-primary/90 transition-colors"
                 >
-                  Call 07927 726622
-                </a>
-                <a
-                  href="https://wa.me/447403725998"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackWhatsAppClick('service_areas_whatsapp_button')}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-primary text-primary rounded-full font-semibold hover:bg-primary hover:text-white transition-colors"
-                >
-                  <WhatsAppIcon className="w-6 h-6" />
-                  WhatsApp Us
+                  Call {phoneDisplay}
                 </a>
               </div>
             </div>

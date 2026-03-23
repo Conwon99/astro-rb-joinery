@@ -1,10 +1,26 @@
-import { Button } from "@/components/ui/button";
-import { Award, Users, Clock, Home, Facebook, Truck } from "lucide-react";
+import { Facebook } from "lucide-react";
 import LazyImage from "@/components/LazyImage";
-import WhatsAppIcon from "@/components/WhatsAppIcon";
-import { trackWhatsAppClick } from "@/utils/analytics";
+import { trackExternalLink } from "@/utils/analytics";
+import { aboutUs } from "@/content/site";
 
-const AboutUs = () => {
+type AboutUsProps = {
+  /** When set, opening copy is tailored to the location hub (same layout as homepage). */
+  locationName?: string;
+  locationRegion?: string;
+  /** One sentence of local context (e.g. `localHook` from location data). */
+  locationHook?: string;
+};
+
+const AboutUs = ({ locationName, locationRegion, locationHook }: AboutUsProps) => {
+  const paragraphs =
+    locationName && locationRegion
+      ? [
+          `RB Joinery is a local team working with homeowners in ${locationName} and across the wider ${locationRegion} area — we answer the phone, turn up, and take pride in the woodwork.${
+            locationHook ? ` ${locationHook}` : ""
+          } We offer honest quotes, tidy sites, and work built to live with every day.`,
+        ]
+      : aboutUs.paragraphs;
+
   return (
     <section id="about" className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-[hsl(var(--asphalt-grey))] overflow-x-hidden">
       <div className="container mx-auto max-w-7xl w-full">
@@ -13,13 +29,15 @@ const AboutUs = () => {
           <div className="space-y-6 sm:space-y-8 order-1">
             <div className="space-y-4 sm:space-y-6">
               <h2 className="font-display font-bold text-2xl sm:text-3xl lg:text-4xl xl:text-5xl text-white leading-tight">
-                ABOUT US
+                {aboutUs.title}
               </h2>
               <div className="w-12 sm:w-16 h-1 bg-primary"></div>
               
-              <p className="text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed max-w-full lg:max-w-2xl break-words">
-                We are trusted joinery and building specialists serving Ayrshire and Glasgow. Our professional team specializes in house extensions, loft conversions, garden rooms, kitchens, and home improvements. Expert joinery services across Ayrshire and Glasgow, delivering premium solutions that enhance your property's value and functionality.
-              </p>
+              <div className="space-y-4 text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed max-w-full lg:max-w-2xl break-words">
+                {paragraphs.map((paragraph, idx) => (
+                  <p key={idx}>{paragraph}</p>
+                ))}
+              </div>
               
               {/* Social Media Icons */}
               <div className="flex items-center gap-3 sm:gap-4">
@@ -31,15 +49,6 @@ const AboutUs = () => {
                   className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors flex-shrink-0"
                 >
                   <Facebook className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                </a>
-                <a 
-                  href="https://wa.me/447927726622" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  onClick={() => trackWhatsAppClick('about_us_whatsapp_button')}
-                  className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center hover:bg-primary/10 transition-colors flex-shrink-0"
-                >
-                  <WhatsAppIcon className="w-4 h-4 sm:w-5 sm:h-5" color="black" />
                 </a>
               </div>
             </div>

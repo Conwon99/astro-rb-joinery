@@ -3,7 +3,20 @@ import { ArrowRight } from "lucide-react";
 import { trackServiceClick } from "@/utils/analytics";
 import { SERVICES } from "@/data/services";
 
-const ServicesGrid = () => {
+type ServicesGridProps = {
+  /** Location hub: links go to `/{slug}/house-extensions` etc. */
+  locationSlug?: string;
+  /** Override the intro line under OUR SERVICES */
+  leadText?: string;
+};
+
+const DEFAULT_LEAD =
+  "Professional services across Ayrshire and Glasgow: house extensions, loft conversions, garden rooms, kitchens, and home improvements.";
+
+const ServicesGrid = ({ locationSlug, leadText = DEFAULT_LEAD }: ServicesGridProps) => {
+  const hrefFor = (href: string) =>
+    locationSlug ? `/${locationSlug}${href}` : href;
+
   return (
     <section id="services" className="py-20 px-4 bg-gradient-to-b from-background to-[hsl(var(--muted))]">
       <div className="container mx-auto max-w-7xl">
@@ -15,7 +28,7 @@ const ServicesGrid = () => {
             <div className="flex-1 h-px bg-[hsl(var(--asphalt-grey))]"></div>
           </div>
           <p className="text-xl text-[hsl(var(--asphalt-grey))] max-w-3xl">
-            Professional services across Ayrshire and Glasgow: house extensions, loft conversions, garden rooms, kitchens, and home improvements.
+            {leadText}
           </p>
         </div>
 
@@ -59,7 +72,7 @@ const ServicesGrid = () => {
                     className="w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-semibold rounded-full"
                   >
                     <a
-                      href={service.href}
+                      href={hrefFor(service.href)}
                       onClick={() => trackServiceClick(service.title, "services_grid")}
                     >
                       Learn more

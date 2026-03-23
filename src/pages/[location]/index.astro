@@ -1,0 +1,147 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation';
+import Footer from '../../components/Footer';
+import ScrollDepthTracker from '../../components/ScrollDepthTracker';
+import ServicePageHero from '../../components/ServicePageHero';
+import AboutUs from '../../components/AboutUs';
+import ServicesGrid from '../../components/ServicesGrid';
+import Gallery from '../../components/Gallery';
+import ServiceAreas from '../../components/ServiceAreas';
+import FAQ from '../../components/FAQ';
+import ContactSection from '../../components/ContactSection';
+import HomepageContent from '../../components/HomepageContent';
+import { LOCATIONS, getLocationBySlug } from '../../data/locations';
+import {
+  getLocationLandingMeta,
+  getLocationLandingCopy,
+  buildCanonical,
+  buildLocationLocalBusinessJson,
+  getLocationHomepageSections,
+  getLocationFaqItems,
+  getLocationServicesGridLead,
+  getLocationGalleryLead,
+  getLocationServiceAreasIntro,
+  getLocationFaqIntro,
+} from '../../content/locationCopy';
+import { homepageHero } from '../../content/site';
+import { googleReviewsBand } from '../../content/servicePageReviews';
+
+export function getStaticPaths() {
+  return LOCATIONS.map((l) => ({ params: { location: l.slug } }));
+}
+
+const { location: locSlug } = Astro.params;
+const loc = getLocationBySlug(locSlug ?? '');
+if (!loc) {
+  throw new Error(`Unknown location: ${locSlug}`);
+}
+
+const meta = getLocationLandingMeta(loc);
+const landingCopy = getLocationLandingCopy(loc);
+const canonical = buildCanonical(`/${loc.slug}`);
+const locationLocalBusinessJson = buildLocationLocalBusinessJson(loc, canonical);
+const homepageSectionsLoc = getLocationHomepageSections(loc);
+const faqItemsLoc = getLocationFaqItems(loc);
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItemsLoc.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  canonical={canonical}
+  locationLocalBusinessJson={locationLocalBusinessJson}
+  hideScrollbar={true}
+>
+  <script type="application/ld+json" set:html={`${JSON.stringify(faqSchema)}`} />
+
+  <main class="min-h-screen">
+    <ScrollDepthTracker client:load />
+    <Navigation client:load />
+    <ServicePageHero
+      client:load
+      sectionId="hero"
+      titleStyle="home"
+      homeTitleRegion={loc.name}
+      homeTitleAllGreen={true}
+      quoteTrackingSource={`location_${loc.slug}_hero_quote_button`}
+      backgroundImage={homepageHero.backgroundImage}
+      heroH1={`Joinery & Building Services ${loc.name}`}
+      heroLead={landingCopy.heroLead}
+      reviewCount={googleReviewsBand.summary.reviewCount}
+      reviewLink={googleReviewsBand.summary.reviewCountLink}
+    />
+    <AboutUs
+      client:load
+      locationName={loc.name}
+      locationRegion={loc.region}
+      locationHook={loc.localHook}
+    />
+    <ServicesGrid
+      client:load
+      locationSlug={loc.slug}
+      leadText={getLocationServicesGridLead(loc)}
+    />
+    <Gallery client:load leadText={getLocationGalleryLead(loc)} />
+    <ServiceAreas
+      client:load
+      introLead={getLocationServiceAreasIntro(loc)}
+      coverageTitle={`${loc.name} & regional coverage`}
+      mapAriaLabel={`OpenStreetMap showing RB Joinery’s typical service region in Ayrshire and Glasgow, with focus on ${loc.name}.`}
+    />
+    <FAQ client:load items={faqItemsLoc} introDescription={getLocationFaqIntro(loc)} />
+    <ContactSection client:load />
+    <HomepageContent
+      client:load
+      sections={homepageSectionsLoc}
+      className="border-t border-green-600/15 bg-[hsl(var(--background))]"
+    />
+    <ContactSection
+      client:load
+      sectionId="contact-cta-bottom"
+      ctaTrackingSource={`location_${loc.slug}_contact_bottom_button`}
+    />
+    <Footer
+      client:load
+      mapLatitude={loc.geo.latitude}
+      mapLongitude={loc.geo.longitude}
+      mapLabel={`RB Joinery — ${loc.name}, ${loc.region}`}
+      mapZoom={loc.slug === 'glasgow' ? 12 : 13}
+    />
+  </main>
+
+  <script>
+    const handleHashNavigation = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const elementId = hash.substring(1);
+        const element = document.getElementById(elementId);
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
+      }
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', handleHashNavigation);
+    } else {
+      handleHashNavigation();
+    }
+
+    window.addEventListener('hashchange', handleHashNavigation);
+  </script>
+</Layout>

@@ -2,55 +2,90 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { Button } from '../components/ui/button';
-import { Phone } from 'lucide-react';
+import ServicePageProse from '../components/ServicePageProse.astro';
+import ServicePageSplitIntro from '../components/ServicePageSplitIntro.astro';
+import ServicePageDarkChecklist from '../components/ServicePageDarkChecklist.astro';
+import ServicePageWhyChooseSplit from '../components/ServicePageWhyChooseSplit.astro';
+import ServicePageGoogleReviews from '../components/ServicePageGoogleReviews';
+import ServicePageContactSplit from '../components/ServicePageContactSplit';
+import ServicePageHero from '../components/ServicePageHero';
+import FAQ from '../components/FAQ';
+import ServiceAreas from '../components/ServiceAreas';
 import { SERVICES } from '../data/services';
+import { servicePages, servicePageWhyChoose } from '../content/site';
+import { googleReviewsBand } from '../content/servicePageReviews';
 
-const title = "Loft Conversions Ayrshire & Glasgow | Professional Loft Conversion Services | RB Joinery";
-const description = "Professional loft conversion services in Ayrshire and Glasgow. Transform your loft into bedrooms, bathrooms, or home offices. Free quotes available.";
+const page = servicePages["loft-conversions"];
+const title = page.metaTitle;
+const description = page.metaDescription;
 const canonical = "https://rbjoinery.com/loft-conversions";
 
-const heroImage = SERVICES.find((s) => s.href === "/loft-conversions")!.image;
+const svc = SERVICES.find((s) => s.href === "/loft-conversions")!;
+const heroImage = svc.image;
+
+const breadcrumbItems = [
+  { name: "Home", url: "/" },
+  { name: "Services", url: "/services" },
+  { name: "Loft Conversions", url: "/loft-conversions" },
+];
 ---
 
-<Layout title={title} description={description} canonical={canonical}>
+<Layout title={title} description={description} canonical={canonical} breadcrumbItems={breadcrumbItems} hideScrollbar={true}>
   <Navigation client:load />
   
   <main class="min-h-screen">
-    <section class="relative flex min-h-[420px] items-center overflow-hidden px-4 pb-20 pt-28 md:min-h-[480px] md:pt-32">
-      <div
-        class="absolute inset-0 bg-cover bg-center"
-        style={`background-image: url(${JSON.stringify(heroImage)})`}
-        aria-hidden="true"
-      />
-      <div class="absolute inset-0 bg-gradient-to-b from-black/65 via-black/50 to-black/70" aria-hidden="true" />
-      <div class="container relative z-10 mx-auto max-w-6xl">
-        <h1 class="font-display mb-6 text-center text-4xl font-bold text-white drop-shadow-md md:text-5xl lg:text-6xl">
-          Loft Conversions Ayrshire & Glasgow
-        </h1>
-        <p class="mx-auto mb-8 max-w-3xl text-center text-xl text-white/95">
-          Professional loft conversion services to transform your loft space.
-        </p>
-        <div class="flex flex-col justify-center gap-4 sm:flex-row">
-          <Button 
-            onClick={() => window.location.href = '/contact'}
-            className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 text-lg font-semibold rounded-full"
-            client:load
-          >
-            Get Free Quote
-          </Button>
-          <Button 
-            onClick={() => window.location.href = 'tel:+447927726622'}
-            variant="outline"
-            className="border-2 border-white bg-white/10 px-8 py-4 text-lg font-semibold text-white backdrop-blur-sm hover:bg-white/20 hover:text-white"
-            client:load
-          >
-            <Phone class="w-5 h-5 mr-2" />
-            Call 07927 726622
-          </Button>
-        </div>
-      </div>
-    </section>
+    <ServicePageHero
+      client:load
+      backgroundImage={heroImage}
+      heroH1={page.heroH1}
+      heroLead={page.heroLead}
+      reviewCount={googleReviewsBand.summary.reviewCount}
+      reviewLink={googleReviewsBand.summary.reviewCountLink}
+    />
+
+    <ServicePageSplitIntro
+      heading={page.splitIntro.heading}
+      body={page.splitIntro.body}
+      primaryImage={svc.image}
+      primaryImageAlt={page.splitIntro.heading}
+      secondaryImage={svc.splitSecondaryImage}
+    />
+
+    {
+      page.darkChecklistSection && (
+        <ServicePageDarkChecklist
+          heading={page.darkChecklistSection.heading}
+          paragraphs={page.darkChecklistSection.paragraphs}
+          bullets={page.darkChecklistSection.bullets}
+          primaryImage={page.darkChecklistSection.primaryImage}
+          primaryImageAlt={page.darkChecklistSection.primaryImageAlt}
+          secondaryImage={page.darkChecklistSection.secondaryImage}
+          secondaryImageAlt={page.darkChecklistSection.secondaryImageAlt}
+        />
+      )
+    }
+
+    <ServicePageWhyChooseSplit
+      heading={servicePageWhyChoose.heading}
+      paragraphs={servicePageWhyChoose.paragraphs}
+      primaryImage={svc.image}
+      primaryImageAlt={`${svc.title} — RB Joinery`}
+      secondaryImage={svc.splitSecondaryImage}
+      secondaryImageAlt={`RB Joinery ${svc.title.toLowerCase()} work`}
+    />
+
+    <ServicePageGoogleReviews client:load />
+
+    <ServicePageContactSplit
+      client:load
+      backgroundImage={heroImage}
+      serviceLabel={svc.title}
+    />
+
+    <ServiceAreas client:load />
+    <FAQ client:load />
+
+    <ServicePageProse content={page} />
   </main>
   
   <Footer client:load />

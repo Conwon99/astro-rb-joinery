@@ -1,6 +1,13 @@
 ---
 import '../index.css';
 import MobileContactFab from '../components/MobileContactFab.astro';
+import { LOCATIONS } from '../data/locations';
+import { CANONICAL_PHONE_E164 } from '../constants/phone';
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
 
 interface Props {
   title?: string;
@@ -8,19 +15,56 @@ interface Props {
   canonical?: string;
   image?: string;
   robots?: string;
+  hideScrollbar?: boolean;
+  breadcrumbItems?: BreadcrumbItem[];
+  /** Extra JSON-LD for location hub / service pages */
+  locationLocalBusinessJson?: Record<string, unknown> | null;
 }
 
 const {
-  title = "RB Joinery | Professional Joinery & Building Services Ayrshire & Glasgow",
+  title = "RB Joinery | Joinery & Building Services Ayrshire & Glasgow",
   description = "Professional joinery & building services in Ayrshire and Glasgow. House extensions, loft conversions, garden rooms, kitchens, and home improvements. Free quotes available.",
   canonical = "https://rbjoinery.com/",
   image = "https://rbjoinery.com/rblogo - Edited.png",
-  robots = "index, follow"
+  robots = "index, follow",
+  hideScrollbar = false,
+  breadcrumbItems,
+  locationLocalBusinessJson = null,
 } = Astro.props;
+
+const mergedAreaServed = [
+  ...LOCATIONS.map((l) => ({
+    "@type": "City",
+    name: l.name,
+    containedInPlace: {
+      "@type": "AdministrativeArea",
+      name: l.region,
+    },
+  })),
+  {
+    "@type": "AdministrativeArea",
+    name: "Ayrshire",
+    containedInPlace: { "@type": "Country", "name": "Scotland" },
+  },
+];
+
+const breadcrumbJsonLd =
+  breadcrumbItems && breadcrumbItems.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumbItems.map((item, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: item.name,
+          item: item.url.startsWith("http") ? item.url : `https://rbjoinery.com${item.url.startsWith("/") ? item.url : `/${item.url}`}`,
+        })),
+      }
+    : null;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class:list={[hideScrollbar && "hide-scrollbar"]}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -53,7 +97,7 @@ const {
       "alternateName": "RB Joinery & Building Services",
       "description": description,
       "url": "https://rbjoinery.com/",
-      "telephone": "+447927726622",
+      "telephone": CANONICAL_PHONE_E164,
       "email": "Ryan@rbjoinery.com",
       "foundingDate": "2020",
       "address": {
@@ -68,18 +112,7 @@ const {
         "latitude": "55.4586",
         "longitude": "-4.6292"
       },
-      "areaServed": [
-        { "@type": "City", "name": "Kilmarnock", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
-        { "@type": "City", "name": "Glasgow", "containedInPlace": { "@type": "AdministrativeArea", "name": "Scotland" } },
-        { "@type": "City", "name": "Irvine", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
-        { "@type": "City", "name": "Troon", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
-        { "@type": "City", "name": "Prestwick", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
-        { "@type": "City", "name": "Ardrossan", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
-        { "@type": "City", "name": "Saltcoats", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
-        { "@type": "City", "name": "Largs", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
-        { "@type": "City", "name": "Girvan", "containedInPlace": { "@type": "AdministrativeArea", "name": "Ayrshire" } },
-        { "@type": "AdministrativeArea", "name": "Ayrshire", "containedInPlace": { "@type": "Country", "name": "Scotland" } }
-      ],
+      "areaServed": mergedAreaServed,
       "serviceType": [
         "House Extensions", "Loft Conversions", "Garden Rooms", "Kitchen Installation",
         "Home Improvements", "Joinery Services", "Carpentry", "Custom Built-ins",
@@ -106,6 +139,13 @@ const {
         "worstRating": "1"
       }
     })}`} />
+
+    {breadcrumbJsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+    )}
+    {locationLocalBusinessJson && (
+      <script type="application/ld+json" set:html={JSON.stringify(locationLocalBusinessJson)} />
+    )}
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/rblogo - Edited.png" />
@@ -114,7 +154,7 @@ const {
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-35QPRJ2GD9"></script>
@@ -146,7 +186,31 @@ const {
     <meta name="msapplication-TileImage" content="https://rbjoinery.com/rblogo - Edited.png" />
   </head>
 
-  <body>
+  <body class:list={[hideScrollbar && "hide-scrollbar"]}>
+    {breadcrumbItems && breadcrumbItems.length > 0 && (
+      <div class="border-b border-gray-200 bg-gray-50/95 pt-20 print:hidden">
+        <div class="container mx-auto max-w-7xl px-4 py-3">
+          <nav aria-label="Breadcrumb">
+            <ol class="flex flex-wrap items-center gap-2 text-sm text-gray-600">
+              {breadcrumbItems.map((item, index) => (
+                <li class="flex items-center gap-2">
+                  {index > 0 && <span class="text-gray-400" aria-hidden="true">/</span>}
+                  {index < breadcrumbItems.length - 1 ? (
+                    <a href={item.url} class="text-green-700 hover:underline">
+                      {item.name}
+                    </a>
+                  ) : (
+                    <span class="font-medium text-gray-900" aria-current="page">
+                      {item.name}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </div>
+      </div>
+    )}
     <slot />
     <MobileContactFab />
   </body>

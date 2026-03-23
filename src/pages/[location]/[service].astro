@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation';
+import Footer from '../../components/Footer';
+import ServicePageSplitIntro from '../../components/ServicePageSplitIntro.astro';
+import ServicePageDarkChecklist from '../../components/ServicePageDarkChecklist.astro';
+import ServicePageWhyChooseSplit from '../../components/ServicePageWhyChooseSplit.astro';
+import ServicePageGoogleReviews from '../../components/ServicePageGoogleReviews';
+import ServicePageContactSplit from '../../components/ServicePageContactSplit';
+import ServicePageHero from '../../components/ServicePageHero';
+import FAQ from '../../components/FAQ';
+import ServiceAreas from '../../components/ServiceAreas';
+import { servicePages, servicePageWhyChoose } from '../../content/site';
+import { googleReviewsBand } from '../../content/servicePageReviews';
+import { LOCATIONS, getLocationBySlug } from '../../data/locations';
+import { SERVICES } from '../../data/services';
+import {
+  getLocationServiceCopy,
+  breadcrumbsLocationService,
+  buildCanonical,
+  buildLocationLocalBusinessJson,
+} from '../../content/locationCopy';
+
+export function getStaticPaths() {
+  const paths: { params: { location: string; service: string } }[] = [];
+  for (const loc of LOCATIONS) {
+    for (const s of SERVICES) {
+      const serviceSlug = s.href.replace(/^\//, '');
+      paths.push({ params: { location: loc.slug, service: serviceSlug } });
+    }
+  }
+  return paths;
+}
+
+const { location: locSlug, service: serviceSlug } = Astro.params;
+const loc = getLocationBySlug(locSlug ?? '');
+const service = SERVICES.find((s) => s.href.replace(/^\//, '') === serviceSlug);
+
+if (!loc || !service) {
+  throw new Error(`Invalid route: ${locSlug}/${serviceSlug}`);
+}
+
+const pageCopy = getLocationServiceCopy(loc, service);
+const canonical = buildCanonical(`/${loc.slug}/${serviceSlug}`);
+const breadcrumbItems = breadcrumbsLocationService(loc, service);
+const locationLocalBusinessJson = buildLocationLocalBusinessJson(loc, canonical);
+
+const hubPage = servicePages[serviceSlug as keyof typeof servicePages];
+const darkSection = hubPage?.darkChecklistSection;
+---
+
+<Layout
+  title={pageCopy.metaTitle}
+  description={pageCopy.metaDescription}
+  canonical={canonical}
+  breadcrumbItems={breadcrumbItems}
+  locationLocalBusinessJson={locationLocalBusinessJson}
+  hideScrollbar={true}
+>
+  <Navigation client:load />
+  <main class="min-h-screen">
+    <ServicePageHero
+      client:load
+      backgroundImage={service.image}
+      heroH1={pageCopy.heroH1}
+      heroLead={pageCopy.heroLead}
+      reviewCount={googleReviewsBand.summary.reviewCount}
+      reviewLink={googleReviewsBand.summary.reviewCountLink}
+    />
+
+    <ServicePageSplitIntro
+      heading={pageCopy.heroH1}
+      body={pageCopy.heroLead}
+      primaryImage={service.image}
+      primaryImageAlt={pageCopy.heroH1}
+      secondaryImage={service.splitSecondaryImage}
+    />
+
+    {
+      darkSection && (
+        <ServicePageDarkChecklist
+          heading={darkSection.heading}
+          paragraphs={darkSection.paragraphs}
+          bullets={darkSection.bullets}
+          primaryImage={darkSection.primaryImage}
+          primaryImageAlt={darkSection.primaryImageAlt}
+          secondaryImage={darkSection.secondaryImage}
+          secondaryImageAlt={darkSection.secondaryImageAlt}
+        />
+      )
+    }
+
+    <ServicePageWhyChooseSplit
+      heading={servicePageWhyChoose.heading}
+      paragraphs={servicePageWhyChoose.paragraphs}
+      primaryImage={service.image}
+      primaryImageAlt={`${service.title} — RB Joinery`}
+      secondaryImage={service.splitSecondaryImage}
+      secondaryImageAlt={`RB Joinery ${service.title.toLowerCase()} work`}
+    />
+
+    <ServicePageGoogleReviews client:load />
+
+    <ServicePageContactSplit
+      client:load
+      backgroundImage={service.image}
+      serviceLabel={`${service.title} — ${loc.name}`}
+    />
+
+    <ServiceAreas client:load />
+    <FAQ client:load />
+
+    <section class="bg-gradient-to-b from-background to-[hsl(var(--muted))] px-4 py-12 md:py-16">
+      <div class="container mx-auto max-w-3xl">
+        {
+          pageCopy.sections.map((block) => (
+            <div class="mb-10 last:mb-0">
+              <h3 class="font-display mb-3 text-xl font-bold text-gray-900 md:text-2xl">
+                {block.h3}
+              </h3>
+              <div
+                class="text-lg leading-relaxed text-gray-700 [&_a]:text-green-600 [&_a]:underline hover:[&_a]:text-green-700"
+                set:html={block.html}
+              />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+  <Footer
+    client:load
+    mapLatitude={loc.geo.latitude}
+    mapLongitude={loc.geo.longitude}
+    mapLabel={`RB Joinery — ${loc.name}, ${loc.region}`}
+    mapZoom={loc.slug === 'glasgow' ? 12 : 13}
+  />
+</Layout>
+
+<script>
+  if (typeof window !== 'undefined') {
+    window.scrollTo(0, 0);
+  }
+</script>
