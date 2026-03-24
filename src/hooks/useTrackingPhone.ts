@@ -15,6 +15,7 @@ export function useTrackingPhone() {
   const [telHref, setTelHref] = useState(`tel:${CANONICAL_PHONE_E164}`);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
     setDisplay(TRACKING_PHONE_DISPLAY_UK);
     setTelHref(`tel:${TRACKING_PHONE_E164}`);
   }, []);

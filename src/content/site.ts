@@ -216,12 +216,151 @@ export const faqItems: FaqItem[] = [
   },
 ];
 
+export const serviceFaqIntroBySlug: Record<string, string> = {
+  "house-extensions":
+    "Common questions about house extensions in Ayrshire and Glasgow, including planning, timings, and build process.",
+  "loft-conversions":
+    "Common questions about loft conversions in Ayrshire and Glasgow, including dormer/Velux options, rules, and costs.",
+  "garden-rooms":
+    "Common questions about garden room builds in Ayrshire and Glasgow, including insulation, power, and planning.",
+  "kitchen-installation":
+    "Common questions about kitchen fitting and installation in Ayrshire and Glasgow, including layout, fitting stages, and timescales.",
+  "home-improvements":
+    "Common questions about home improvements and joinery upgrades in Ayrshire and Glasgow.",
+  "door-fitting":
+    "Common questions about internal and external door fitting in Ayrshire and Glasgow, including repairs and replacements.",
+  "bathroom-fitting":
+    "Common questions about bathroom fitting and refurbishment in Ayrshire and Glasgow.",
+};
+
+export const serviceFaqBySlug: Record<string, FaqItem[]> = {
+  "house-extensions": [
+    {
+      question: "Do I need planning permission for a house extension?",
+      answer:
+        "Some extensions need planning permission while others may be covered by permitted development. It depends on your property, size, and location. We help you understand what applies before work starts.",
+    },
+    {
+      question: "How long does a typical house extension take?",
+      answer:
+        "Timescales vary by size and complexity, but most extensions run over several weeks to a few months. Weather, structural work, and approvals can affect programme length.",
+    },
+    {
+      question: "Can you manage the build from structure to finish?",
+      answer:
+        "Yes. We coordinate the key stages from structural shell and joinery through finishing details so the project stays organised and consistent.",
+    },
+  ],
+  "loft-conversions": [
+    {
+      question: "Is my loft suitable for conversion?",
+      answer:
+        "Suitability depends on head height, roof structure, and access for stairs. We assess these early and advise what conversion type is realistic for your home.",
+    },
+    {
+      question: "What is the difference between dormer and Velux loft conversions?",
+      answer:
+        "Dormer conversions add usable floor area and headroom, while Velux conversions keep the roofline and are often simpler where existing height is sufficient.",
+    },
+    {
+      question: "Do loft conversions need building standards approval?",
+      answer:
+        "Yes, loft conversions must meet relevant building standards for structure, insulation, and fire safety. We build with compliance in mind.",
+    },
+  ],
+  "garden-rooms": [
+    {
+      question: "Are garden rooms usable all year?",
+      answer:
+        "Yes, when properly insulated and detailed. We build garden rooms for year-round comfort, not just summer use.",
+    },
+    {
+      question: "Can you add electrics and data points in a garden room?",
+      answer:
+        "Yes. We plan practical layouts for lighting, sockets, and data requirements as part of the overall project setup.",
+    },
+    {
+      question: "Do garden rooms require planning permission?",
+      answer:
+        "Some do and some do not, depending on size, height, and placement. We help you check local requirements before installation.",
+    },
+  ],
+  "kitchen-installation": [
+    {
+      question: "Do you fit kitchens supplied by Howdens, Wickes, or other retailers?",
+      answer:
+        "Yes. We can fit supplied kitchens and coordinate the fitting stages so units, worktops, and finishing details are installed cleanly.",
+    },
+    {
+      question: "How long does kitchen installation usually take?",
+      answer:
+        "Most kitchen fits run from several days to a couple of weeks depending on prep work, layout changes, and additional trades.",
+    },
+    {
+      question: "Can you handle kitchen renovations as well as fitting?",
+      answer:
+        "Yes. We support renovation work alongside installation where walls, floors, and joinery need updating before final fit-out.",
+    },
+  ],
+  "home-improvements": [
+    {
+      question: "What types of home improvements do you take on?",
+      answer:
+        "We handle practical upgrades including joinery repairs, interior improvements, structural alterations, and general refurbishment work.",
+    },
+    {
+      question: "Can you combine several smaller jobs into one project?",
+      answer:
+        "Yes. Grouping related improvements often saves time and helps keep finishes consistent across the home.",
+    },
+    {
+      question: "Do you provide free quotes for home improvement work?",
+      answer:
+        "Yes. We provide free, no-obligation quotes and explain scope clearly before work is booked.",
+    },
+  ],
+  "door-fitting": [
+    {
+      question: "Do you fit both internal and external doors?",
+      answer:
+        "Yes. We fit and adjust internal and external doors, including alignment, hardware fitting, and finish details.",
+    },
+    {
+      question: "Can you fix doors that stick, drop, or do not close properly?",
+      answer:
+        "Yes. Many issues can be resolved with proper adjustment and re-fitting rather than full replacement.",
+    },
+    {
+      question: "Do you install locks, handles, and hinges as part of door fitting?",
+      answer:
+        "Yes. We fit and align hinges, latches, locks, and handles so doors operate smoothly and securely.",
+    },
+  ],
+  "bathroom-fitting": [
+    {
+      question: "Do you do full bathroom refurbishments or only fitting?",
+      answer:
+        "We can do both. From fixture fitting to full bathroom refurbishments, we focus on practical layout and a high-quality finish.",
+    },
+    {
+      question: "Can you fit bathroom furniture and storage neatly around pipework?",
+      answer:
+        "Yes. We include joinery and finishing details such as boxing, trims, and storage solutions for a clean final look.",
+    },
+    {
+      question: "How disruptive is a bathroom fitting project?",
+      answer:
+        "Bathroom work is staged to reduce disruption where possible. We keep work areas tidy and communicate timings throughout.",
+    },
+  ],
+};
+
 export type ServicePageDarkChecklistSection = {
   heading: string;
   paragraphs: string[];
   bullets: string[];
-  primaryImage: string;
-  primaryImageAlt: string;
+  primaryImage?: string;
+  primaryImageAlt?: string;
   secondaryImage?: string;
   secondaryImageAlt?: string;
 };
@@ -287,11 +426,6 @@ export const servicePages: Record<string, ServicePageContent> = {
         "Your kitchen, dining, or utility layout no longer works for daily family life.",
         "You would rather invest in your current home than pay stamp duty, fees, and moving stress.",
       ],
-      primaryImage: "/Services/House extension..jpg",
-      primaryImageAlt: "House extension project by RB Joinery",
-      secondaryImage:
-        "/gallery/imgi_52_541425463_122124483296932776_821082229721008959_n.jpg",
-      secondaryImageAlt: "RB Joinery structural and building work",
     },
     sections: [
       {
@@ -375,10 +509,6 @@ export const servicePages: Record<string, ServicePageContent> = {
         "Your loft has usable head height or could gain it with a dormer without overpowering the street.",
         "You want to add value and living space without the cost and hassle of moving house.",
       ],
-      primaryImage: "/Services/Loft..jpg",
-      primaryImageAlt: "Loft conversion by RB Joinery",
-      secondaryImage: "/gallery/imgi_6_513540452_122093898356932776_717539460719561833_n.jpg",
-      secondaryImageAlt: "RB Joinery loft and interior work",
     },
     sections: [
       {
@@ -459,11 +589,6 @@ export const servicePages: Record<string, ServicePageContent> = {
         "You want a gym or hobby space that keeps noise and clutter out of the main house.",
         "You have enough garden space for a modest footprint and sensible distance from boundaries.",
       ],
-      primaryImage: "/Services/garden room.webp",
-      primaryImageAlt: "Garden room by RB Joinery",
-      secondaryImage:
-        "/gallery/imgi_70_531882235_122119545026932776_7092298327067455591_n.jpg",
-      secondaryImageAlt: "RB Joinery garden room construction",
     },
     sections: [
       {
@@ -544,11 +669,6 @@ export const servicePages: Record<string, ServicePageContent> = {
         "You are changing layout, moving a boiler, or boxing services and need proper carpentry.",
         "You have new units on order and want a fitter who respects timelines and finishes trims neatly.",
       ],
-      primaryImage: "/Services/Kitchen installation..jpg",
-      primaryImageAlt: "Kitchen installation by RB Joinery",
-      secondaryImage:
-        "/gallery/imgi_74_530512795_122119544852932776_6508393302475343238_n.jpg",
-      secondaryImageAlt: "RB Joinery bespoke kitchen joinery",
     },
     sections: [
       {
@@ -629,11 +749,6 @@ export const servicePages: Record<string, ServicePageContent> = {
         "You are refreshing a room and want architraves, skirting, and boxing done to a high standard.",
         "You need staged work so you can stay living at home while we improve one area at a time.",
       ],
-      primaryImage: "/Services/home improv.jpg",
-      primaryImageAlt: "Home improvements by RB Joinery",
-      secondaryImage:
-        "/gallery/imgi_42_540938429_122124484052932776_3952873525751063385_n.jpg",
-      secondaryImageAlt: "RB Joinery renovation and interior work",
     },
     sections: [
       {
@@ -728,11 +843,6 @@ export const servicePages: Record<string, ServicePageContent> = {
         "You are upgrading to new internal doors and want a clean, consistent finish.",
         "You need external doors fitted securely with reliable locks and seals.",
       ],
-      primaryImage: "/Services/home improv.jpg",
-      primaryImageAlt: "Door fitting by RB Joinery",
-      secondaryImage:
-        "/gallery/imgi_84_527224925_122117141390932776_4700848699766695002_n.jpg",
-      secondaryImageAlt: "RB Joinery detailed finishing work",
     },
     sections: [
       {
@@ -791,11 +901,6 @@ export const servicePages: Record<string, ServicePageContent> = {
         "You want a full refresh with modern fittings and durable finishes.",
         "You need reliable fitting and neat joinery details around fixtures and storage.",
       ],
-      primaryImage: "/Services/Kitchen installation..jpg",
-      primaryImageAlt: "Bathroom fitting by RB Joinery",
-      secondaryImage:
-        "/gallery/imgi_103_516941672_122100986204932776_7040050199649825090_n.jpg",
-      secondaryImageAlt: "RB Joinery installation and finishing work",
     },
     sections: [
       {

@@ -12,13 +12,19 @@ import ServicePageHero from '../components/ServicePageHero';
 import FAQ from '../components/FAQ';
 import ServiceAreas from '../components/ServiceAreas';
 import { SERVICES } from '../data/services';
-import { servicePages, servicePageWhyChoose } from '../content/site';
+import {
+  faqItems,
+  serviceFaqBySlug,
+  serviceFaqIntroBySlug,
+  servicePages,
+  servicePageWhyChoose,
+} from '../content/site';
 import { googleReviewsBand } from '../content/servicePageReviews';
 
 const page = servicePages["loft-conversions"];
 const title = page.metaTitle;
 const description = page.metaDescription;
-const canonical = "https://rbjoinery.com/loft-conversions";
+const canonical = "https://rbjoinery.com/loft-conversions/";
 
 const svc = SERVICES.find((s) => s.href === "/loft-conversions")!;
 const heroImage = svc.image;
@@ -83,7 +89,11 @@ const breadcrumbItems = [
     />
 
     <ServiceAreas client:load />
-    <FAQ client:load />
+    <FAQ
+      client:load
+      items={serviceFaqBySlug["loft-conversions"] ?? faqItems}
+      introDescription={serviceFaqIntroBySlug["loft-conversions"]}
+    />
 
     <ServicePageProse content={page} />
   </main>

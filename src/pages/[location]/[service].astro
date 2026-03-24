@@ -10,7 +10,13 @@ import ServicePageContactSplit from '../../components/ServicePageContactSplit';
 import ServicePageHero from '../../components/ServicePageHero';
 import FAQ from '../../components/FAQ';
 import ServiceAreas from '../../components/ServiceAreas';
-import { servicePages, servicePageWhyChoose } from '../../content/site';
+import {
+  faqItems,
+  serviceFaqBySlug,
+  serviceFaqIntroBySlug,
+  servicePages,
+  servicePageWhyChoose,
+} from '../../content/site';
 import { googleReviewsBand } from '../../content/servicePageReviews';
 import { LOCATIONS, getLocationBySlug } from '../../data/locations';
 import { SERVICES } from '../../data/services';
@@ -108,7 +114,14 @@ const darkSection = hubPage?.darkChecklistSection;
     />
 
     <ServiceAreas client:load />
-    <FAQ client:load />
+    <FAQ
+      client:load
+      items={serviceFaqBySlug[serviceSlug ?? ""] ?? faqItems}
+      introDescription={
+        serviceFaqIntroBySlug[serviceSlug ?? ""] ??
+        "Common questions about this service in your area."
+      }
+    />
 
     <section class="bg-gradient-to-b from-background to-[hsl(var(--muted))] px-4 py-12 md:py-16">
       <div class="container mx-auto max-w-3xl">

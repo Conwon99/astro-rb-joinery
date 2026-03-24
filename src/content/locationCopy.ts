@@ -95,7 +95,9 @@ export function getLocationServiceCopy(loc: LocationDef, service: Service): Loca
   const metaDescription = `${service.title} in ${loc.name} and nearby ${loc.neighborhoods[0] || "areas"}. RB Joinery — free quotes. Call ${CANONICAL_PHONE_DISPLAY_UK}.`;
 
   const problemOpen = pickProblemLine(slug, loc);
-  const heroLead = `${problemOpen} Here is how we help in ${loc.name}.`;
+  const heroLead = `${problemOpen} Here is how we help in ${loc.name}. We regularly work across ${
+    loc.neighborhoods[0] || loc.name
+  }, ${loc.neighborhoods[1] || loc.name}, and surrounding streets, with clear advice, tidy workmanship, and straightforward quotes before any work begins.`;
 
   const sections = buildServiceSections(slug, loc, service);
 
@@ -121,6 +123,10 @@ function pickProblemLine(serviceSlug: string, loc: LocationDef): string {
       return `Tired of a cramped or dated kitchen in ${loc.name}?`;
     case "home-improvements":
       return `Small repairs piling up in ${loc.name}? ${w}`;
+    case "door-fitting":
+      return `Need door fitting help in ${loc.name}?`;
+    case "bathroom-fitting":
+      return `Planning a bathroom fitting project in ${loc.name}?`;
     default:
       return `Need ${serviceSlug.replace(/-/g, " ")} help in ${loc.name}?`;
   }
@@ -155,12 +161,18 @@ function buildServiceSections(
   }
 
   const localBlock = `<p class="mb-4">We work in ${loc.name} and nearby areas such as ${loc.neighborhoods.slice(0, 4).join(", ")}. ${loc.localHook}</p><p class="mb-4">Landmarks locals know — ${loc.landmarks.join(", ")} — help us find you. ${loc.propertyTypes}</p>`;
+  const serviceTypesTitle = `Types of ${service.title.toLowerCase()}`;
+  const serviceTypesHtml = buildServiceTypesHtml(serviceSlug, loc.name);
 
   return [
     { h3: `Why ${service.title} in ${loc.name}?`, html: story },
     {
       h3: "You call us",
-      html: `<p class="mb-4">Ring <strong>${CANONICAL_PHONE_DISPLAY_UK}</strong> or use our ${contact} form. Tell us your postcode in ${loc.name} and what you need.</p>`,
+      html: `<p class="mb-4">Ring <strong>${CANONICAL_PHONE_DISPLAY_UK}</strong> or use our ${contact} form. Tell us your postcode in ${loc.name}, what the issue is, and the outcome you want.</p><p class="mb-4">If you have photos, sizes, or rough plans, share them at this stage. It helps us give practical guidance straight away and plan the right visit for your property.</p>`,
+    },
+    {
+      h3: serviceTypesTitle,
+      html: serviceTypesHtml,
     },
     {
       h3: "We book a time",
@@ -177,14 +189,36 @@ function buildServiceSections(
     { h3: `${loc.name} and nearby`, html: localBlock },
     {
       h3: "More services",
-      html: `<p class="mb-4">See all <a href="${SITE}/services" class="text-green-600 hover:underline">joinery services</a> or our main <a href="${service.href}" class="text-green-600 hover:underline">${service.title}</a> page for ${loc.region === "Glasgow" ? "Glasgow" : "Ayrshire"} and beyond.</p>`,
+      html: `<p class="mb-4">See all <a href="${SITE}/services/" class="text-green-600 hover:underline">joinery services</a> or our main <a href="${service.href.endsWith("/") ? service.href : `${service.href}/`}" class="text-green-600 hover:underline">${service.title}</a> page for ${loc.region === "Glasgow" ? "Glasgow" : "Ayrshire"} and beyond.</p>`,
     },
   ];
 }
 
+function buildServiceTypesHtml(serviceSlug: string, locationName: string): string {
+  switch (serviceSlug) {
+    case "door-fitting":
+      return `<p class="mb-4">In ${locationName}, we handle internal door fitting, external door fitting, replacement doors, and frame/hinge adjustments.</p><p class="mb-4">We also fit locks, latches, and handles so doors close properly, seal well, and feel solid in daily use.</p>`;
+    case "bathroom-fitting":
+      return `<p class="mb-4">Our bathroom fitting in ${locationName} includes full refurbishments, fixture fitting, vanity/furniture installation, and finish joinery.</p><p class="mb-4">We can also handle practical upgrades such as better storage layouts, trim work, and tidy boxing around services.</p>`;
+    case "kitchen-installation":
+      return `<p class="mb-4">Kitchen services in ${locationName} include full kitchen fitting, replacement unit installs, layout-led upgrades, and finishing carpentry.</p><p class="mb-4">We fit supplied kitchens or support design-led installs, with careful leveling, trimming, and neat final detailing.</p>`;
+    case "house-extensions":
+      return `<p class="mb-4">Extension options in ${locationName} include single-storey rear extensions, side returns, and larger two-storey builds where suitable.</p><p class="mb-4">We also help with extension-related structural work and phased projects when homeowners want to improve in stages.</p>`;
+    case "loft-conversions":
+      return `<p class="mb-4">Loft conversion work in ${locationName} can include dormer conversions, Velux-style conversions, and loft room upgrades.</p><p class="mb-4">We advise on access, stairs, and practical room use so the space works day to day, not just on paper.</p>`;
+    case "garden-rooms":
+      return `<p class="mb-4">Garden room services in ${locationName} include home office builds, gym/studio rooms, and insulated multipurpose spaces.</p><p class="mb-4">We also cover layout-led fit-outs, including storage-friendly joinery and finishing details for year-round use.</p>`;
+    case "home-improvements":
+      return `<p class="mb-4">Home improvements in ${locationName} include joinery repairs, room refreshes, interior upgrades, and practical maintenance work.</p><p class="mb-4">Typical jobs include doors, trims, stair updates, and staged improvement projects tailored to your home and budget.</p>`;
+    default:
+      return `<p class="mb-4">We provide a range of ${serviceSlug.replace(/-/g, " ")} options in ${locationName}, tailored to your property and goals.</p>`;
+  }
+}
+
 export function buildCanonical(path: string): string {
   const p = path.startsWith("/") ? path : `/${path}`;
-  return `${SITE}${p}`;
+  const withSlash = p.endsWith("/") ? p : `${p}/`;
+  return `${SITE}${withSlash}`;
 }
 
 /** Location-flavoured LocalBusiness JSON-LD for hub and location service pages */
@@ -216,6 +250,8 @@ export function buildLocationLocalBusinessJson(loc: LocationDef, pageUrl: string
       "Garden Rooms",
       "Kitchen Installation",
       "Home Improvements",
+      "Door Fitting",
+      "Bathroom Fitting",
     ],
     aggregateRating: {
       "@type": "AggregateRating",

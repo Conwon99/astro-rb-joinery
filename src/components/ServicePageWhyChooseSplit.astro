@@ -11,10 +11,6 @@ interface Props {
 const {
   heading,
   paragraphs,
-  primaryImage,
-  primaryImageAlt,
-  secondaryImage,
-  secondaryImageAlt = "",
 } = Astro.props;
 ---
 
@@ -26,31 +22,14 @@ const {
     <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-14 xl:gap-16">
       <div class="relative mx-auto w-full max-w-xl lg:mx-0 lg:max-w-none">
         <img
-          src={primaryImage}
-          alt={primaryImageAlt}
+          src="/van.jpg"
+          alt="RB Joinery van"
           class="aspect-[4/3] w-full rounded-2xl object-cover shadow-xl"
           width="800"
           height="600"
           loading="lazy"
           decoding="async"
         />
-        {
-          secondaryImage && (
-            <div
-              class="absolute -bottom-4 -left-2 z-10 w-[44%] max-w-[240px] overflow-hidden rounded-2xl border-2 border-neutral-500 shadow-2xl sm:-bottom-5 sm:-left-4 lg:-bottom-6 lg:-left-6 lg:max-w-[280px]"
-            >
-              <img
-                src={secondaryImage}
-                alt={secondaryImageAlt}
-                class="aspect-[4/3] w-full object-cover"
-                width="400"
-                height="300"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-          )
-        }
       </div>
 
       <div class="text-left lg:pl-4">
