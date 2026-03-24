@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "preview": "astro preview",
     "convert-images": "node scripts/convert-to-webp.js",
+    "optimize-images": "node scripts/optimize-public-images.mjs",
     "optimize": "npm run convert-images && npm run build",
     "astro": "astro"
   },

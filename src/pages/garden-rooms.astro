@@ -20,19 +20,20 @@ import {
   servicePageWhyChoose,
 } from '../content/site';
 import { googleReviewsBand } from '../content/servicePageReviews';
+import { SITE_ORIGIN } from '../constants/site';
 
 const page = servicePages["garden-rooms"];
 const title = page.metaTitle;
 const description = page.metaDescription;
-const canonical = "https://rbjoinery.com/garden-rooms/";
+const canonical = `${SITE_ORIGIN}/garden-rooms/`;
 
-const svc = SERVICES.find((s) => s.href === "/garden-rooms")!;
+const svc = SERVICES.find((s) => s.href === "/garden-rooms/")!;
 const heroImage = svc.image;
 
 const breadcrumbItems = [
   { name: "Home", url: "/" },
-  { name: "Services", url: "/services" },
-  { name: "Garden Rooms", url: "/garden-rooms" },
+  { name: "Services", url: "/services/" },
+  { name: "Garden Rooms", url: "/garden-rooms/" },
 ];
 ---
 
@@ -47,6 +48,7 @@ const breadcrumbItems = [
       heroLead={page.heroLead}
       reviewCount={googleReviewsBand.summary.reviewCount}
       reviewLink={googleReviewsBand.summary.reviewCountLink}
+      quoteTrackingSource="garden_rooms_hero_quote_button"
     />
 
     <ServicePageSplitIntro

@@ -3,6 +3,7 @@ import '../index.css';
 import MobileContactFab from '../components/MobileContactFab.astro';
 import { LOCATIONS } from '../data/locations';
 import { CANONICAL_PHONE_E164 } from '../constants/phone';
+import { SITE_ORIGIN } from '../constants/site';
 
 interface BreadcrumbItem {
   name: string;
@@ -24,8 +25,8 @@ interface Props {
 const {
   title = "RB Joinery | Joinery & Building Services Ayrshire & Glasgow",
   description = "Professional joinery & building services in Ayrshire and Glasgow. House extensions, loft conversions, garden rooms, kitchens, and home improvements. Free quotes available.",
-  canonical = "https://rbjoinery.com/",
-  image = "https://rbjoinery.com/rblogo - Edited.png",
+  canonical = `${SITE_ORIGIN}/`,
+  image = `${SITE_ORIGIN}/rblogo - Edited.webp`,
   robots = "index, follow",
   hideScrollbar = false,
   breadcrumbItems,
@@ -57,10 +58,77 @@ const breadcrumbJsonLd =
           "@type": "ListItem",
           position: i + 1,
           name: item.name,
-          item: item.url.startsWith("http") ? item.url : `https://rbjoinery.com${item.url.startsWith("/") ? item.url : `/${item.url}`}`,
+          item: item.url.startsWith("http") ? item.url : `${SITE_ORIGIN}${item.url.startsWith("/") ? item.url : `/${item.url}`}`,
         })),
       }
     : null;
+
+const primaryBusinessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": ["HomeAndConstructionBusiness", "GeneralContractor"],
+  name: "RB Joinery",
+  alternateName: "RB Joinery & Building Services",
+  description,
+  url: `${SITE_ORIGIN}/`,
+  telephone: CANONICAL_PHONE_E164,
+  email: "Ryan@rbjoinery.com",
+  foundingDate: "2020",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Kilmarnock",
+    addressRegion: "Ayrshire",
+    addressCountry: "Scotland",
+    postalCode: "KA1",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: "55.4586",
+    longitude: "-4.6292",
+  },
+  areaServed: mergedAreaServed,
+  serviceType: [
+    "House Extensions",
+    "Loft Conversions",
+    "Garden Rooms",
+    "Kitchen Installation",
+    "Home Improvements",
+    "Door Fitting",
+    "Bathroom Fitting",
+    "Joinery Services",
+    "Carpentry",
+    "Custom Built-ins",
+    "Staircases",
+    "Doors and Windows",
+    "Fitted Furniture",
+    "Building Services",
+    "Renovations",
+    "Structural Work",
+    "Interior Design",
+    "Bespoke Joinery",
+    "Commercial Joinery",
+    "Maintenance and Repairs",
+  ],
+  openingHours: [
+    "Mo 08:00-18:00",
+    "Tu 08:00-18:00",
+    "We 08:00-18:00",
+    "Th 08:00-18:00",
+    "Fr 08:00-18:00",
+    "Sa 09:00-16:00",
+    "Su 10:00-15:00",
+  ],
+  priceRange: "$$",
+  image: [`${SITE_ORIGIN}/rblogo - Edited.webp`, `${SITE_ORIGIN}/RB joinery back2.webp`],
+  logo: `${SITE_ORIGIN}/rblogo - Edited.webp`,
+  sameAs: [],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "5.0",
+    reviewCount: "15",
+    bestRating: "5",
+    worstRating: "1",
+  },
+};
 ---
 
 <!DOCTYPE html>
@@ -77,68 +145,11 @@ const breadcrumbJsonLd =
     <meta name="geo.region" content="GB-SCT" />
     <meta name="geo.placename" content="Ayrshire & Glasgow, Scotland" />
     
-    <!-- Google Analytics -->
-    <script is:inline define:vars={{ gtagId: "G-6CMJ7GLMSY" }}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', gtagId);
-    </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CMJ7GLMSY"></script>
-    
     <!-- Canonical URL -->
     <link rel="canonical" href={canonical} />
     
     <!-- Enhanced JSON-LD Schema for LocalBusiness -->
-    <script type="application/ld+json" set:html={`${JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": ["LocalBusiness", "LandscapingBusiness", "HomeImprovementContractor", "ContractorService"],
-      "name": "RB Joinery",
-      "alternateName": "RB Joinery & Building Services",
-      "description": description,
-      "url": "https://rbjoinery.com/",
-      "telephone": CANONICAL_PHONE_E164,
-      "email": "Ryan@rbjoinery.com",
-      "foundingDate": "2020",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Kilmarnock",
-        "addressRegion": "Ayrshire",
-        "addressCountry": "Scotland",
-        "postalCode": "KA1"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "55.4586",
-        "longitude": "-4.6292"
-      },
-      "areaServed": mergedAreaServed,
-      "serviceType": [
-        "House Extensions", "Loft Conversions", "Garden Rooms", "Kitchen Installation",
-        "Home Improvements", "Door Fitting", "Bathroom Fitting", "Joinery Services", "Carpentry", "Custom Built-ins",
-        "Staircases", "Doors and Windows", "Fitted Furniture", "Building Services",
-        "Renovations", "Structural Work", "Interior Design", "Bespoke Joinery",
-        "Commercial Joinery", "Maintenance and Repairs"
-      ],
-      "openingHours": [
-        "Mo 08:00-18:00", "Tu 08:00-18:00", "We 08:00-18:00",
-        "Th 08:00-18:00", "Fr 08:00-18:00", "Sa 09:00-16:00", "Su 10:00-15:00"
-      ],
-      "priceRange": "$$",
-      "image": [
-        "https://rbjoinery.com/rblogo - Edited.png",
-        "https://rbjoinery.com/RB joinery back2.jpg"
-      ],
-      "logo": "https://rbjoinery.com/rblogo - Edited.png",
-      "sameAs": [],
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "5.0",
-        "reviewCount": "15",
-        "bestRating": "5",
-        "worstRating": "1"
-      }
-    })}`} />
+    <script type="application/ld+json" set:html={JSON.stringify(primaryBusinessJsonLd)} />
 
     {breadcrumbJsonLd && (
       <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
@@ -148,8 +159,8 @@ const breadcrumbJsonLd =
     )}
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/rblogo - Edited.png" />
-    <link rel="alternate icon" href="/rblogo - Edited.png" />
+    <link rel="icon" type="image/webp" href="/rblogo - Edited.webp" />
+    <link rel="alternate icon" href="/rblogo - Edited.webp" />
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -183,7 +194,7 @@ const breadcrumbJsonLd =
     
     <meta name="theme-color" content="#1e40af" />
     <meta name="msapplication-TileColor" content="#1e40af" />
-    <meta name="msapplication-TileImage" content="https://rbjoinery.com/rblogo - Edited.png" />
+    <meta name="msapplication-TileImage" content={`${SITE_ORIGIN}/rblogo - Edited.webp`} />
   </head>
 
   <body class:list={[hideScrollbar && "hide-scrollbar"]}>

@@ -3,7 +3,7 @@ import { SERVICES } from "@/data/services";
 import { ArrowRight } from "lucide-react";
 
 function slugFromHref(href: string): string {
-  return href.replace(/^\//, "");
+  return href.replace(/^\/|\/$/g, "");
 }
 
 type Props = {
@@ -25,7 +25,7 @@ const LocationServicesSection = ({ location, intro }: Props) => {
             return (
               <a
                 key={service.href}
-                href={`/${location.slug}/${s}`}
+                href={`/${location.slug}/${s}/`}
                 className="group flex h-full flex-col overflow-hidden rounded-3xl bg-card shadow-[var(--shadow-card)] transition-[var(--transition-smooth)] hover:scale-[1.02] hover:shadow-[var(--shadow-soft)]"
               >
                 <div className="aspect-[4/3] overflow-hidden">

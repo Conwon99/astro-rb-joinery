@@ -3,11 +3,13 @@ import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { SERVICES } from '../data/services';
+import { LOCATIONS } from '../data/locations';
 import { servicesHub } from '../content/site';
+import { SITE_ORIGIN } from '../constants/site';
 
 const title = servicesHub.metaTitle;
 const description = servicesHub.metaDescription;
-const canonical = 'https://rbjoinery.com/services';
+const canonical = `${SITE_ORIGIN}/services/`;
 ---
 
 <Layout title={title} description={description} canonical={canonical}>
@@ -54,13 +56,58 @@ const canonical = 'https://rbjoinery.com/services';
                     {service.description}
                   </p>
                   <span class="mt-auto inline-flex items-center text-green-600 font-semibold group-hover:underline">
-                    Learn more
+                    More about {service.title}
                     <span class="ml-1" aria-hidden="true">→</span>
                   </span>
                 </div>
               </a>
             ))
           }
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white px-4 py-16 border-t border-gray-100">
+      <div class="container mx-auto max-w-5xl">
+        <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-start">
+          <div class="space-y-5 text-lg leading-relaxed text-gray-700">
+            <h2 class="font-display text-3xl font-bold text-gray-900 md:text-4xl">
+              Joinery and building services across Ayrshire and Glasgow
+            </h2>
+            <p>
+              RB Joinery takes on everything from larger projects like
+              <a href="/house-extensions/" class="text-green-700 underline hover:text-green-800">house extensions</a>
+              and
+              <a href="/loft-conversions/" class="text-green-700 underline hover:text-green-800">loft conversions</a>
+              to practical upgrades such as
+              <a href="/kitchen-installation/" class="text-green-700 underline hover:text-green-800">kitchen installation</a>,
+              <a href="/door-fitting/" class="text-green-700 underline hover:text-green-800">door fitting</a>,
+              <a href="/bathroom-fitting/" class="text-green-700 underline hover:text-green-800">bathroom fitting</a>,
+              and
+              <a href="/home-improvements/" class="text-green-700 underline hover:text-green-800">home improvements</a>.
+            </p>
+            <p>
+              We work with homeowners who want clear advice before work starts, tidy workmanship during the job, and a finish that still feels solid after daily use. If you are not sure which service page best matches your project, you can
+              <a href="/contact/" class="text-green-700 underline hover:text-green-800">contact us for a free quote</a>
+              or browse the towns we cover on our
+              <a href="/locations/" class="text-green-700 underline hover:text-green-800">locations page</a>.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-green-100 bg-green-50 p-6">
+            <h2 class="font-display text-2xl font-bold text-gray-900">Popular service areas</h2>
+            <ul class="mt-4 grid gap-3 text-sm font-medium text-gray-700 sm:grid-cols-2 lg:grid-cols-1">
+              {
+                LOCATIONS.map((loc) => (
+                  <li>
+                    <a href={`/${loc.slug}/`} class="text-green-700 hover:underline">
+                      Joinery in {loc.name}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
         </div>
       </div>
     </section>

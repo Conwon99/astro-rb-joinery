@@ -59,7 +59,7 @@ const AboutUs = ({ locationName, locationRegion, locationHook }: AboutUsProps) =
             <div className="text-center w-full max-w-sm sm:max-w-md lg:max-w-lg">
               <div className="mb-4 sm:mb-6 mx-auto">
                 <LazyImage
-                  src="/rblogo - Edited.png"
+                  src="/rblogo - Edited.webp"
                   alt="RB Joinery logo"
                   className="w-full h-auto max-w-[200px] sm:max-w-[250px] lg:max-w-[320px] object-contain mx-auto"
                 />

@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { trackQuoteRequest, trackFormInteraction } from "@/utils/analytics";
 import { cn } from "@/lib/utils";
 import { useTrackingPhone } from "@/hooks/useTrackingPhone";
+import { SITE_ORIGIN } from "@/constants/site";
 
 const FORMSPREE_URL = "https://formspree.io/f/xanpaopz";
 
@@ -63,15 +64,15 @@ const ServicePageContactSplit = ({
           houseNumber: formData.houseNumber,
           message: formData.message,
           service: serviceLabel,
-          website: "https://rbjoinery.com/",
-          _subject: `Service enquiry: ${serviceLabel} — rbjoinery.com`,
+          website: `${SITE_ORIGIN}/`,
+          _subject: `Service enquiry: ${serviceLabel} — ${SITE_ORIGIN.replace(/^https?:\/\//, "")}`,
         }),
       });
 
       if (response.ok) {
         trackQuoteRequest("service_page_contact_form", [serviceLabel]);
         trackFormInteraction("service_contact_form", { status: "submit_success" });
-        window.location.href = "/thank-you";
+        window.location.href = "/thank-you/";
       } else {
         throw new Error("Failed to send");
       }

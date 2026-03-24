@@ -111,7 +111,7 @@ const ServicePageHero = ({
           ) : (
             homeTitleMain
           )}
-        </span>
+        </span>{" "}
         <span className="mt-5 block max-w-2xl break-words !font-figtree text-base font-medium leading-relaxed text-white/95 drop-shadow-md sm:mt-6 sm:text-lg md:text-xl">
           {heroLead}
         </span>
@@ -156,28 +156,37 @@ const ServicePageHero = ({
         {/* CTAs + review badge share one row on md+ so the badge lines up with the quote button */}
         <div className="mt-8 flex flex-col gap-8 md:mt-10 md:flex-row md:items-center md:justify-between md:gap-6">
           <div className="flex max-w-2xl flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
-            <button
-              type="button"
+            <a
+              href="/contact/"
               onClick={() => {
                 if (quoteTrackingSource) {
                   trackQuoteRequest(quoteTrackingSource, []);
                 }
-                window.location.href = "/contact";
               }}
               className="group inline-flex w-fit items-center gap-1 rounded-full bg-green-600 py-2 pl-8 pr-2 text-left font-bold uppercase tracking-wide text-white shadow-lg transition-colors hover:bg-green-700 focus-visible:outline focus-visible:ring-2 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
             >
-              <span className="pr-2">Get free quote</span>
+              <span className="pr-2">Get a free quote</span>
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-800/90 transition-transform group-hover:scale-105">
                 <ArrowUpRight className="h-6 w-6" aria-hidden />
               </span>
-            </button>
-            <a
-              href="/services"
-              className="inline-flex items-center gap-2 text-base font-semibold text-white transition-colors hover:text-sky-200"
-            >
-              View services
-              <ArrowUpRight className="h-4 w-4" aria-hidden />
             </a>
+            {titleStyle === "home" ? (
+              <a
+                href="/services/"
+                className="inline-flex items-center gap-2 text-base font-semibold text-white transition-colors hover:text-sky-200"
+              >
+                View services
+                <ArrowUpRight className="h-4 w-4" aria-hidden />
+              </a>
+            ) : (
+              <a
+                href="/contact/"
+                className="inline-flex items-center gap-2 text-base font-semibold text-white underline-offset-4 transition-colors hover:text-sky-200 hover:underline"
+              >
+                Contact us
+                <ArrowUpRight className="h-4 w-4" aria-hidden />
+              </a>
+            )}
           </div>
 
           <div className="flex shrink-0 justify-start md:justify-end">

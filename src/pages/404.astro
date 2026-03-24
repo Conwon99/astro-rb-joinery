@@ -1,11 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { SITE_ORIGIN } from '../constants/site';
 ---
 
 <Layout 
   title="404 - Page Not Found | RB Joinery"
   description="The page you're looking for doesn't exist. Return to RB Joinery homepage."
-  canonical="https://rbjoinery.com/404"
+  canonical={`${SITE_ORIGIN}/404/`}
   robots="noindex, nofollow"
 >
   <div class="min-h-screen flex items-center justify-center bg-gray-100">
@@ -27,9 +28,9 @@ import Layout from '../layouts/Layout.astro';
         <div class="text-sm text-gray-600">
           <p class="mb-2">Or explore our services:</p>
           <div class="flex flex-wrap justify-center gap-4">
-            <a href="/services" class="text-green-600 hover:underline">Our Services</a>
+            <a href="/services/" class="text-green-600 hover:underline">Our Services</a>
             <a href="/#about" class="text-green-600 hover:underline">About Us</a>
-            <a href="/contact" class="text-green-600 hover:underline">Contact</a>
+            <a href="/contact/" class="text-green-600 hover:underline">Contact</a>
           </div>
         </div>
       </div>

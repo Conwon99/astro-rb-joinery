@@ -2,10 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
+import { SITE_ORIGIN } from '../constants/site';
 
 const title = "Thank You | RB Joinery";
 const description = "Thanks for your enquiry. We'll get back to you shortly.";
-const canonical = "https://rbjoinery.com/thank-you/";
+const canonical = `${SITE_ORIGIN}/thank-you/`;
 ---
 
 <Layout title={title} description={description} canonical={canonical} robots="noindex, nofollow">

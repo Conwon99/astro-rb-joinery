@@ -1,5 +1,6 @@
 ---
 import type { ServicePageContent } from "../content/site";
+import { LOCATIONS } from "../data/locations";
 import ServicePageMidCta from "./ServicePageMidCta.astro";
 
 interface Props {
@@ -81,4 +82,31 @@ const showMidCta = content.sections.length > 3;
       </>
     ))
   }
+  <section class="bg-white px-4 py-16 md:py-20 lg:py-24" aria-labelledby="service-areas-served-heading">
+    <div class="container mx-auto max-w-6xl">
+      <h2
+        id="service-areas-served-heading"
+        class="font-display mb-6 max-w-4xl text-3xl font-bold leading-tight tracking-tight text-neutral-900 md:mb-8 md:text-4xl lg:text-[2.25rem]"
+      >
+        {content.heroH1} across our service areas
+      </h2>
+      <p class="max-w-4xl text-lg leading-relaxed text-neutral-700 md:text-xl">
+        We cover Ayrshire and Glasgow, and each town page below links straight to the local version of this service.
+      </p>
+      <ul class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          LOCATIONS.map((loc) => (
+            <li>
+              <a
+                href={`/${loc.slug}/${content.slug}/`}
+                class="block rounded-2xl border border-green-100 bg-green-50 px-5 py-4 font-medium text-green-800 transition-colors hover:border-green-300 hover:bg-green-100 hover:underline"
+              >
+                {content.heroH1} in {loc.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
 </div>

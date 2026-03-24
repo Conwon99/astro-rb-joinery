@@ -7,13 +7,12 @@ import {
   type FaqItem,
 } from "@/content/site";
 import { CANONICAL_PHONE_DISPLAY_UK, CANONICAL_PHONE_E164 } from "@/constants/phone";
-
-const SITE = "https://rbjoinery.com";
+import { SITE_ORIGIN as SITE } from "@/constants/site";
 
 export const locationsHubMeta = {
-  title: "Locations | Joinery & Building Services Ayrshire & Glasgow | RB Joinery",
+  title: "Locations We Serve | RB Joinery",
   description:
-    "RB Joinery serves Ayr, Glasgow, Kilmarnock, Irvine, Troon, Prestwick, Ardrossan, Saltcoats, Largs, and Girvan. Find local joinery and building services near you.",
+    "RB Joinery serves Ayr, Glasgow, Kilmarnock, Irvine, Troon, Prestwick, Ardrossan, Saltcoats, Largs, and Girvan for joinery, extensions, lofts, kitchens, and home improvements.",
 };
 
 export function getLocationLandingMeta(loc: LocationDef): { title: string; description: string } {
@@ -78,7 +77,7 @@ export function getLocationLandingCopy(loc: LocationDef) {
 }
 
 function serviceSlugFromHref(href: string): string {
-  return href.replace(/^\//, "");
+  return href.replace(/^\/|\/$/g, "");
 }
 
 export type LocationServiceCopy = {
@@ -91,8 +90,8 @@ export type LocationServiceCopy = {
 
 export function getLocationServiceCopy(loc: LocationDef, service: Service): LocationServiceCopy {
   const slug = serviceSlugFromHref(service.href);
-  const metaTitle = `${service.title} ${loc.name} | Who's the Best ${service.title} Near Me? | RB Joinery`;
-  const metaDescription = `${service.title} in ${loc.name} and nearby ${loc.neighborhoods[0] || "areas"}. RB Joinery — free quotes. Call ${CANONICAL_PHONE_DISPLAY_UK}.`;
+  const metaTitle = `${service.title} ${loc.name} | RB Joinery`;
+  const metaDescription = `Need ${service.title.toLowerCase()} in ${loc.name}? RB Joinery works across ${loc.region} with clear quotes, tidy workmanship, and reliable local service. Call ${CANONICAL_PHONE_DISPLAY_UK}.`;
 
   const problemOpen = pickProblemLine(slug, loc);
   const heroLead = `${problemOpen} Here is how we help in ${loc.name}. We regularly work across ${
@@ -137,7 +136,7 @@ function buildServiceSections(
   loc: LocationDef,
   service: Service
 ): { h3: string; html: string }[] {
-  const contact = `<a href="/contact" class="text-green-600 hover:underline">contact us</a>`;
+  const contact = `<a href="/contact/" class="text-green-600 hover:underline">contact us</a>`;
 
   let story = "";
   switch (serviceSlug) {
@@ -225,7 +224,7 @@ export function buildCanonical(path: string): string {
 export function buildLocationLocalBusinessJson(loc: LocationDef, pageUrl: string): Record<string, unknown> {
   return {
     "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "HomeImprovementContractor"],
+    "@type": ["HomeAndConstructionBusiness", "GeneralContractor"],
     name: `RB Joinery — ${loc.name}`,
     description: `Joinery and building services in ${loc.name}, ${loc.region}. House extensions, lofts, garden rooms, kitchens, and home improvements.`,
     url: pageUrl,
@@ -267,8 +266,8 @@ export function buildLocationLocalBusinessJson(loc: LocationDef, pageUrl: string
 export function breadcrumbsLocation(loc: LocationDef) {
   return [
     { name: "Home", url: `${SITE}/` },
-    { name: "Locations", url: `${SITE}/locations` },
-    { name: loc.name, url: `${SITE}/${loc.slug}` },
+    { name: "Locations", url: `${SITE}/locations/` },
+    { name: loc.name, url: `${SITE}/${loc.slug}/` },
   ];
 }
 
@@ -276,9 +275,9 @@ export function breadcrumbsLocationService(loc: LocationDef, service: Service) {
   const slug = serviceSlugFromHref(service.href);
   return [
     { name: "Home", url: `${SITE}/` },
-    { name: "Locations", url: `${SITE}/locations` },
-    { name: loc.name, url: `${SITE}/${loc.slug}` },
-    { name: service.title, url: `${SITE}/${loc.slug}/${slug}` },
+    { name: "Locations", url: `${SITE}/locations/` },
+    { name: loc.name, url: `${SITE}/${loc.slug}/` },
+    { name: service.title, url: `${SITE}/${loc.slug}/${slug}/` },
   ];
 }
 

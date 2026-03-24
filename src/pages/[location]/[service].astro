@@ -31,7 +31,7 @@ export function getStaticPaths() {
   const paths: { params: { location: string; service: string } }[] = [];
   for (const loc of LOCATIONS) {
     for (const s of SERVICES) {
-      const serviceSlug = s.href.replace(/^\//, '');
+      const serviceSlug = s.href.replace(/^\/|\/$/g, '');
       paths.push({ params: { location: loc.slug, service: serviceSlug } });
     }
   }
@@ -40,7 +40,7 @@ export function getStaticPaths() {
 
 const { location: locSlug, service: serviceSlug } = Astro.params;
 const loc = getLocationBySlug(locSlug ?? '');
-const service = SERVICES.find((s) => s.href.replace(/^\//, '') === serviceSlug);
+const service = SERVICES.find((s) => s.href.replace(/^\/|\/$/g, '') === serviceSlug);
 
 if (!loc || !service) {
   throw new Error(`Invalid route: ${locSlug}/${serviceSlug}`);
@@ -72,6 +72,7 @@ const darkSection = hubPage?.darkChecklistSection;
       heroLead={pageCopy.heroLead}
       reviewCount={googleReviewsBand.summary.reviewCount}
       reviewLink={googleReviewsBand.summary.reviewCountLink}
+      quoteTrackingSource={`location_${loc.slug}_${serviceSlug}_hero_quote_button`}
     />
 
     <ServicePageSplitIntro

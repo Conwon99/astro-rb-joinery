@@ -20,19 +20,20 @@ import {
   servicePageWhyChoose,
 } from '../content/site';
 import { googleReviewsBand } from '../content/servicePageReviews';
+import { SITE_ORIGIN } from '../constants/site';
 
 const page = servicePages["door-fitting"];
 const title = page.metaTitle;
 const description = page.metaDescription;
-const canonical = "https://rbjoinery.com/door-fitting/";
+const canonical = `${SITE_ORIGIN}/door-fitting/`;
 
-const svc = SERVICES.find((s) => s.href === "/door-fitting")!;
+const svc = SERVICES.find((s) => s.href === "/door-fitting/")!;
 const heroImage = svc.image;
 
 const breadcrumbItems = [
   { name: "Home", url: "/" },
-  { name: "Services", url: "/services" },
-  { name: "Door Fitting", url: "/door-fitting" },
+  { name: "Services", url: "/services/" },
+  { name: "Door Fitting", url: "/door-fitting/" },
 ];
 ---
 
@@ -47,6 +48,7 @@ const breadcrumbItems = [
       heroLead={page.heroLead}
       reviewCount={googleReviewsBand.summary.reviewCount}
       reviewLink={googleReviewsBand.summary.reviewCountLink}
+      quoteTrackingSource="door_fitting_hero_quote_button"
     />
 
     <ServicePageSplitIntro

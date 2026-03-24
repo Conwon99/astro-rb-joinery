@@ -63,32 +63,42 @@ const Footer = ({
             </h4>
             <ul className="space-y-3 text-white">
               <li>
-                <a href="/services" className="hover:text-gray-300 transition-colors">
+                <a href="/services/" className="hover:text-gray-300 transition-colors">
                   • All services
                 </a>
               </li>
               <li>
-                <a href="/house-extensions" className="hover:text-gray-300 transition-colors">
+                <a href="/house-extensions/" className="hover:text-gray-300 transition-colors">
                   • House Extensions
                 </a>
               </li>
               <li>
-                <a href="/loft-conversions" className="hover:text-gray-300 transition-colors">
+                <a href="/loft-conversions/" className="hover:text-gray-300 transition-colors">
                   • Loft Conversions
                 </a>
               </li>
               <li>
-                <a href="/garden-rooms" className="hover:text-gray-300 transition-colors">
+                <a href="/garden-rooms/" className="hover:text-gray-300 transition-colors">
                   • Garden Rooms
                 </a>
               </li>
               <li>
-                <a href="/kitchen-installation" className="hover:text-gray-300 transition-colors">
+                <a href="/kitchen-installation/" className="hover:text-gray-300 transition-colors">
                   • Kitchen Installation
                 </a>
               </li>
               <li>
-                <a href="/home-improvements" className="hover:text-gray-300 transition-colors">
+                <a href="/bathroom-fitting/" className="hover:text-gray-300 transition-colors">
+                  • Bathroom Fitting
+                </a>
+              </li>
+              <li>
+                <a href="/door-fitting/" className="hover:text-gray-300 transition-colors">
+                  • Door Fitting
+                </a>
+              </li>
+              <li>
+                <a href="/home-improvements/" className="hover:text-gray-300 transition-colors">
                   • Home Improvements
                 </a>
               </li>
@@ -98,7 +108,7 @@ const Footer = ({
           {/* Locations — hub + town links; hover panel on large screens */}
           <div className="relative group">
             <h4 className="font-display text-xl font-bold text-white mb-6 flex flex-wrap items-center gap-2">
-              <a href="/locations" className="hover:text-gray-300 transition-colors">
+              <a href="/locations/" className="hover:text-gray-300 transition-colors">
                 Locations
               </a>
               <ChevronDown
@@ -108,14 +118,14 @@ const Footer = ({
             </h4>
             <ul className="space-y-3 text-white lg:hidden">
               <li>
-                <a href="/locations" className="hover:text-gray-300 transition-colors">
+                <a href="/locations/" className="hover:text-gray-300 transition-colors">
                   • All locations
                 </a>
               </li>
               {LOCATIONS.map((loc) => (
                 <li key={loc.slug}>
                   <a
-                    href={`/${loc.slug}`}
+                    href={`/${loc.slug}/`}
                     className="hover:text-gray-300 transition-colors"
                   >
                     • {loc.name}
@@ -130,14 +140,14 @@ const Footer = ({
             >
               <ul className="space-y-2 rounded-lg border border-white/10 bg-black py-3 px-4 shadow-lg">
                 <li>
-                  <a href="/locations" className="block text-sm hover:text-gray-300 transition-colors" role="menuitem">
+                  <a href="/locations/" className="block text-sm hover:text-gray-300 transition-colors" role="menuitem">
                     All locations
                   </a>
                 </li>
                 {LOCATIONS.map((loc) => (
                   <li key={loc.slug}>
                     <a
-                      href={`/${loc.slug}`}
+                      href={`/${loc.slug}/`}
                       className="block text-sm hover:text-gray-300 transition-colors"
                       role="menuitem"
                     >

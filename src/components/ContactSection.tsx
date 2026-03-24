@@ -12,7 +12,7 @@ const ContactSection = ({
 }: ContactSectionProps) => {
   const handleQuoteClick = () => {
     trackQuoteRequest(ctaTrackingSource, []);
-    window.location.href = "/contact";
+    window.location.href = "/contact/";
   };
 
   return (

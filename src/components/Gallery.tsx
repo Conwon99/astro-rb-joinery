@@ -14,16 +14,16 @@ const Gallery = ({ leadText = DEFAULT_GALLERY_LEAD }: GalleryProps) => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
   const galleryImages = [
-    { src: "/gallery/imgi_102_515904287_122100986222932776_5118890495447873286_n.jpg", alt: "RB Joinery project - Professional joinery work" },
-    { src: "/gallery/imgi_103_516941672_122100986204932776_7040050199649825090_n.jpg", alt: "RB Joinery project - Custom carpentry work" },
-    { src: "/gallery/imgi_106_516623366_122100986156932776_5862980644307507215_n.jpg", alt: "RB Joinery project - Building construction" },
-    { src: "/gallery/imgi_42_540938429_122124484052932776_3952873525751063385_n.jpg", alt: "RB Joinery project - Home renovation" },
-    { src: "/gallery/imgi_52_541425463_122124483296932776_821082229721008959_n.jpg", alt: "RB Joinery project - Structural work" },
-    { src: "/gallery/imgi_54_534553790_122121824852932776_948781921373463331_n.jpg", alt: "RB Joinery project - Interior finishing" },
-    { src: "/gallery/imgi_6_513540452_122093898356932776_717539460719561833_n.jpg", alt: "RB Joinery project - Complete home transformation" },
-    { src: "/gallery/imgi_70_531882235_122119545026932776_7092298327067455591_n.jpg", alt: "RB Joinery project - Garden room construction" },
-    { src: "/gallery/imgi_74_530512795_122119544852932776_6508393302475343238_n.jpg", alt: "RB Joinery project - Bespoke joinery" },
-    { src: "/gallery/imgi_84_527224925_122117141390932776_4700848699766695002_n.jpg", alt: "RB Joinery project - Quality craftsmanship" }
+    { src: "/gallery/imgi_102_515904287_122100986222932776_5118890495447873286_n.webp", alt: "RB Joinery project - Professional joinery work" },
+    { src: "/gallery/imgi_103_516941672_122100986204932776_7040050199649825090_n.webp", alt: "RB Joinery project - Custom carpentry work" },
+    { src: "/gallery/imgi_106_516623366_122100986156932776_5862980644307507215_n.webp", alt: "RB Joinery project - Building construction" },
+    { src: "/gallery/imgi_42_540938429_122124484052932776_3952873525751063385_n.webp", alt: "RB Joinery project - Home renovation" },
+    { src: "/gallery/imgi_52_541425463_122124483296932776_821082229721008959_n.webp", alt: "RB Joinery project - Structural work" },
+    { src: "/gallery/imgi_54_534553790_122121824852932776_948781921373463331_n.webp", alt: "RB Joinery project - Interior finishing" },
+    { src: "/gallery/imgi_6_513540452_122093898356932776_717539460719561833_n.webp", alt: "RB Joinery project - Complete home transformation" },
+    { src: "/gallery/imgi_70_531882235_122119545026932776_7092298327067455591_n.webp", alt: "RB Joinery project - Garden room construction" },
+    { src: "/gallery/imgi_74_530512795_122119544852932776_6508393302475343238_n.webp", alt: "RB Joinery project - Bespoke joinery" },
+    { src: "/gallery/imgi_84_527224925_122117141390932776_4700848699766695002_n.webp", alt: "RB Joinery project - Quality craftsmanship" }
   ];
 
   const openLightbox = (index: number) => {

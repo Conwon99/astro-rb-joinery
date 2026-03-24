@@ -75,8 +75,8 @@ const ServicesGrid = ({ locationSlug, leadText = DEFAULT_LEAD }: ServicesGridPro
                       href={hrefFor(service.href)}
                       onClick={() => trackServiceClick(service.title, "services_grid")}
                     >
-                      Learn more
-                      <ArrowRight className="w-4 h-4 ml-2" />
+                      More about {service.title}
+                      <ArrowRight className="w-4 h-4 ml-2" aria-hidden />
                     </a>
                   </Button>
                 </div>

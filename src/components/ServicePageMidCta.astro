@@ -1,5 +1,4 @@
 ---
-import { Button } from "./ui/button";
 import TrackedPhoneLink from "./TrackedPhoneLink";
 
 interface Props {
@@ -39,13 +38,12 @@ const {
         </p>
       </div>
       <div class="flex justify-start lg:justify-end">
-        <Button
-          client:load
-          onClick={() => (window.location.href = "/contact")}
-          className="rounded-full bg-[#E9B24E] px-10 py-7 text-base font-semibold text-neutral-900 shadow-lg transition-colors hover:bg-[#ddb044] md:text-lg"
+        <a
+          href="/contact/"
+          class="inline-flex items-center justify-center rounded-full bg-[#E9B24E] px-10 py-7 text-base font-semibold text-neutral-900 shadow-lg transition-colors hover:bg-[#ddb044] md:text-lg"
         >
-          Get A Free Quote
-        </Button>
+          Get a free quote
+        </a>
       </div>
     </div>
   </div>

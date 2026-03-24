@@ -58,7 +58,7 @@ const LazyImage = ({
   // Convert WebP to fallback format if needed
   const getFallbackSrc = (webpSrc: string) => {
     if (fallbackSrc) return fallbackSrc;
-    return webpSrc.replace('.webp', '.jpg').replace('.webp', '.png');
+    return webpSrc;
   };
 
   return (

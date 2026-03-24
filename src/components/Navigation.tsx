@@ -17,10 +17,15 @@ const Navigation = () => {
   const [locationsExpanded, setLocationsExpanded] = useState(false);
 
   useEffect(() => {
-    setIsHomePage(window.location.pathname === "/");
+    // Netlify commonly serves the homepage as `/` or `/` with a trailing slash depending on settings.
+    // Treat both as the homepage so in-page navigation works consistently.
+    const isHomePath = (pathname: string) =>
+      pathname === "/" || pathname === "/index.html";
+
+    setIsHomePage(isHomePath(window.location.pathname));
 
     const handlePopState = () => {
-      setIsHomePage(window.location.pathname === "/");
+      setIsHomePage(isHomePath(window.location.pathname));
     };
 
     window.addEventListener("popstate", handlePopState);
@@ -63,7 +68,7 @@ const Navigation = () => {
 
   const handleQuoteClick = () => {
     trackQuoteRequest("navigation_button", []);
-    window.location.href = "/contact";
+    window.location.href = "/contact/";
   };
 
   const handleNavClick = (sectionId: string) => {
@@ -81,7 +86,7 @@ const Navigation = () => {
   const ServicesDropdown = ({ compact }: { compact?: boolean }) => (
     <div className="relative group">
       <a
-        href="/services"
+        href="/services/"
         className={compact ? servicesLinkClassSm : servicesLinkClass}
         onClick={() => trackNavigation("services_page")}
       >
@@ -114,7 +119,7 @@ const Navigation = () => {
   const LocationsDropdown = ({ compact }: { compact?: boolean }) => (
     <div className="relative group">
       <a
-        href="/locations"
+        href="/locations/"
         className={compact ? servicesLinkClassSm : servicesLinkClass}
         onClick={() => trackNavigation("locations_hub")}
       >
@@ -130,7 +135,7 @@ const Navigation = () => {
           {LOCATIONS.map((loc) => (
             <a
               key={loc.slug}
-              href={`/${loc.slug}`}
+              href={`/${loc.slug}/`}
               role="menuitem"
               className="block px-4 py-2 text-sm text-white hover:bg-white/10 hover:text-green-400"
               onClick={() => trackNavigation(`nav_location_${loc.slug}`)}
@@ -166,7 +171,7 @@ const Navigation = () => {
             >
               <div className="h-[3.75rem] w-[3.75rem] md:h-[4.5rem] md:w-[4.5rem] lg:h-24 lg:w-24">
                 <LazyImage
-                  src="/rblogo - Edited.png"
+                  src="/rblogo - Edited.webp"
                   alt="RB Joinery logo"
                   className="h-full w-full object-contain"
                 />
@@ -220,7 +225,7 @@ const Navigation = () => {
               FAQ
             </button>
             <a
-              href="/contact"
+              href="/contact/"
               className="font-medium text-white transition-colors duration-200 hover:text-green-400"
               onClick={() => trackNavigation("contact_page")}
             >
@@ -248,7 +253,7 @@ const Navigation = () => {
               onClick={handleQuoteClick}
               className="group inline-flex w-fit shrink-0 items-center gap-1 rounded-full bg-green-600 py-1.5 pl-5 pr-1.5 text-left text-xs font-bold uppercase tracking-wide text-white shadow-lg transition-colors hover:bg-green-700 focus-visible:outline focus-visible:ring-2 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
-              <span className="pr-1">Get free quote</span>
+              <span className="pr-1">Get a free quote</span>
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-800/90 transition-transform group-hover:scale-105">
                 <ArrowUpRight className="h-4 w-4" aria-hidden />
               </span>
@@ -275,7 +280,7 @@ const Navigation = () => {
               onClick={handleQuoteClick}
               className="group inline-flex w-fit items-center gap-1 rounded-full bg-green-600 py-2 pl-8 pr-2 text-left font-bold uppercase tracking-wide text-white shadow-lg transition-colors hover:bg-green-700 focus-visible:outline focus-visible:ring-2 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
-              <span className="pr-2">Get free quote</span>
+              <span className="pr-2">Get a free quote</span>
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-800/90 transition-transform group-hover:scale-105">
                 <ArrowUpRight className="h-6 w-6" aria-hidden />
               </span>
@@ -322,7 +327,7 @@ const Navigation = () => {
                 {servicesExpanded && (
                   <div className="space-y-1 border-l border-white/10 pb-3 pl-6">
                     <a
-                      href="/services"
+                      href="/services/"
                       className="block py-2 text-sm text-white/90 transition-colors hover:text-green-400"
                       onClick={() => {
                         trackNavigation("services_page");
@@ -364,7 +369,7 @@ const Navigation = () => {
                 {locationsExpanded && (
                   <div className="space-y-1 border-l border-white/10 pb-3 pl-6">
                     <a
-                      href="/locations"
+                      href="/locations/"
                       className="block py-2 text-sm text-white/90 transition-colors hover:text-green-400"
                       onClick={() => {
                         trackNavigation("locations_hub");
@@ -376,7 +381,7 @@ const Navigation = () => {
                     {LOCATIONS.map((loc) => (
                       <a
                         key={loc.slug}
-                        href={`/${loc.slug}`}
+                        href={`/${loc.slug}/`}
                         className="block py-2 text-sm text-white/90 transition-colors hover:text-green-400"
                         onClick={() => {
                           trackNavigation(`nav_location_${loc.slug}`);
@@ -405,7 +410,7 @@ const Navigation = () => {
                 FAQ
               </button>
               <a
-                href="/contact"
+                href="/contact/"
                 className="block w-full px-4 py-2 text-left text-white transition-colors duration-200 hover:bg-white/10 hover:text-green-400"
                 onClick={() => {
                   trackNavigation("contact_page");
@@ -437,7 +442,7 @@ const Navigation = () => {
                   }}
                   className="group inline-flex w-full items-center justify-center gap-1 rounded-full bg-green-600 py-2 pl-6 pr-2 font-bold uppercase tracking-wide text-white shadow-lg transition-colors hover:bg-green-700 focus-visible:outline focus-visible:ring-2 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 >
-                  <span className="pr-2">Get free quote</span>
+                  <span className="pr-2">Get a free quote</span>
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-800/90 transition-transform group-hover:scale-105">
                     <ArrowUpRight className="h-6 w-6" aria-hidden />
                   </span>

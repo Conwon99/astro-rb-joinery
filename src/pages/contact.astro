@@ -4,13 +4,14 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import ServicePageContactSplit from '../components/ServicePageContactSplit';
 import { SERVICES } from '../data/services';
+import { SITE_ORIGIN } from '../constants/site';
 
 const title = "Contact Us | RB Joinery - Get Your Free Quote";
-const description = "Contact RB Joinery for professional joinery and building services in Ayrshire and Glasgow. Get your free quote today.";
-const canonical = "https://rbjoinery.com/contact/";
+const description = "Contact RB Joinery for joinery and building services in Ayrshire and Glasgow. Get a free quote for extensions, lofts, kitchens, and home improvements.";
+const canonical = `${SITE_ORIGIN}/contact/`;
 
 /** Same hero image as the House Extensions service page — matches that page’s contact form block. */
-const houseExtensions = SERVICES.find((s) => s.href === "/house-extensions")!;
+const houseExtensions = SERVICES.find((s) => s.href === "/house-extensions/")!;
 const contactBackgroundImage = houseExtensions.image;
 ---
 
@@ -38,6 +39,41 @@ const contactBackgroundImage = houseExtensions.image;
         sectionId="contact"
         compact={true}
       />
+
+      <section class="bg-white px-4 py-14 border-t border-gray-100">
+        <div class="container mx-auto max-w-4xl space-y-5 text-base leading-relaxed text-gray-700 md:text-lg">
+          <h2 class="font-display text-3xl font-bold text-gray-900 md:text-4xl">
+            What to include in your enquiry
+          </h2>
+          <p>
+            The more detail you can give us, the easier it is to point you to the right next step. If you already know the type of work you need, mention whether it is a
+            <a href="/house-extensions/" class="text-green-700 underline hover:text-green-800">house extension</a>,
+            <a href="/loft-conversions/" class="text-green-700 underline hover:text-green-800">loft conversion</a>,
+            <a href="/garden-rooms/" class="text-green-700 underline hover:text-green-800">garden room</a>,
+            <a href="/kitchen-installation/" class="text-green-700 underline hover:text-green-800">kitchen installation</a>,
+            <a href="/bathroom-fitting/" class="text-green-700 underline hover:text-green-800">bathroom fitting</a>,
+            <a href="/door-fitting/" class="text-green-700 underline hover:text-green-800">door fitting</a>,
+            or
+            <a href="/home-improvements/" class="text-green-700 underline hover:text-green-800">general home improvement</a>
+            job.
+          </p>
+          <p>
+            It also helps to include your postcode, a rough idea of the size of the project, and any timing requirements. We work across towns including
+            <a href="/ayr/" class="text-green-700 underline hover:text-green-800"> Ayr</a>,
+            <a href="/glasgow/" class="text-green-700 underline hover:text-green-800"> Glasgow</a>,
+            <a href="/kilmarnock/" class="text-green-700 underline hover:text-green-800"> Kilmarnock</a>,
+            <a href="/irvine/" class="text-green-700 underline hover:text-green-800"> Irvine</a>,
+            and the wider Ayrshire area. You can browse all areas on our
+            <a href="/locations/" class="text-green-700 underline hover:text-green-800"> locations page</a>
+            if you want to see local service coverage before you send your message.
+          </p>
+          <p>
+            If you are still at the planning stage, that is fine too. We can point you toward the most relevant
+            <a href="/services/" class="text-green-700 underline hover:text-green-800"> service page</a>,
+            explain whether your idea is likely to suit your property, and let you know what information is useful before a site visit. Clear first contact usually leads to faster quoting and a smoother start once work is booked in.
+          </p>
+        </div>
+      </section>
     </main>
 
     <Footer client:load />

@@ -1,19 +1,16 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
-import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://rbjoinery.com',
+  site: 'https://rbjoinerystaging.netlify.app',
+  /** Match Netlify pretty URLs + canonical trailing-slash URLs site-wide */
   trailingSlash: 'always',
   integrations: [
     react(),
     tailwind({
       applyBaseStyles: false,
-    }),
-    sitemap({
-      filter: (page) => !page.endsWith("/thank-you/") && !page.endsWith("/404/"),
     }),
   ],
   output: 'static',

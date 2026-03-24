@@ -7,5 +7,4 @@
 
 # Ensure proper handling of static assets
 /robots.txt      /robots.txt   200
-/sitemap.xml       /sitemap-index.xml  301
 /favicon.ico     /favicon.ico  200

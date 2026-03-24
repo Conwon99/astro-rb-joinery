@@ -28,7 +28,7 @@ export const homepageMeta = {
 
 /** Homepage hero copy; `titleStyle="home"` renders trailing “Ayrshire & Glasgow” in green. */
 export const homepageHero = {
-  backgroundImage: "/RB joinery back2.jpg",
+  backgroundImage: "/RB joinery back2.webp",
   heroH1: "Joinery & Building Services Ayrshire & Glasgow",
   heroLead:
     "Expert joinery and building specialists serving Ayrshire and Glasgow. Professional house extensions, loft conversions, garden rooms, kitchens, and home improvements.",
@@ -384,9 +384,9 @@ export type ServicePageContent = {
 /** Services index (/services) hub */
 export const servicesHub = {
   metaTitle:
-    "Joinery Services Ayrshire & Glasgow | Extensions, Lofts & Kitchens | RB Joinery",
+    "Joinery Services Ayrshire & Glasgow | RB Joinery",
   metaDescription:
-    "Joinery services across Ayrshire and Glasgow: house extensions, loft conversions, garden rooms, kitchen installation, door fitting, bathroom fitting, and home improvements. RB Joinery — free quotes.",
+    "Joinery services across Ayrshire and Glasgow, including extensions, loft conversions, garden rooms, kitchens, doors, bathrooms, and home improvements. Free quotes from RB Joinery.",
   h1: "Joinery Services in Ayrshire & Glasgow",
   lead:
     "Whether you need a new kitchen, loft conversion, full house extension, door fitting, or bathroom fitting, we bring joinery and building skills to homes across Ayrshire and Glasgow. Pick a service below to read more, or get in touch for a free quote.",
@@ -405,7 +405,7 @@ export const servicePages: Record<string, ServicePageContent> = {
   "house-extensions": {
     slug: "house-extensions",
     metaTitle:
-      "House Extensions Ayrshire & Glasgow | Single & Two Storey | RB Joinery",
+      "House Extensions Ayrshire & Glasgow | RB Joinery",
     metaDescription:
       "House extensions in Ayrshire and Glasgow. Single-storey and two-storey builds, planning help, and quality construction. Free quotes — RB Joinery.",
     heroH1: "House Extensions in Ayrshire & Glasgow",
@@ -480,7 +480,7 @@ export const servicePages: Record<string, ServicePageContent> = {
         h2: "How to Get Started",
         paragraphs: [
           "Tell us what you need — rough size, what you want the room for, and your postcode. We visit when it suits you, give a free quote, and explain what happens next.",
-          'If you are comparing builders, read our reviews and ask for examples of past work. See also our <a href="/services" class="text-green-600 hover:underline">full list of services</a> or <a href="/contact" class="text-green-600 hover:underline">contact us</a> for a chat.',
+          'If you are comparing builders, read our reviews and ask for examples of past work. See also our <a href="/services/" class="text-green-600 hover:underline">full list of services</a> or <a href="/contact/" class="text-green-600 hover:underline">contact us</a> for a chat.',
         ],
       },
     ],
@@ -488,7 +488,7 @@ export const servicePages: Record<string, ServicePageContent> = {
   "loft-conversions": {
     slug: "loft-conversions",
     metaTitle:
-      "Loft Conversions Ayrshire & Glasgow | Dormer & Velux | RB Joinery",
+      "Loft Conversions Ayrshire & Glasgow | RB Joinery",
     metaDescription:
       "Loft conversions in Ayrshire and Glasgow. Dormer and Velux conversions, extra bedrooms and offices. Expert joinery. Free quotes.",
     heroH1: "Loft Conversions in Ayrshire & Glasgow",
@@ -560,7 +560,7 @@ export const servicePages: Record<string, ServicePageContent> = {
       {
         h2: "Get a Quote",
         paragraphs: [
-          `Call ${CANONICAL_PHONE_DISPLAY_UK} or use our <a href=\"/contact\" class=\"text-green-600 hover:underline\">contact form</a>. We also build <a href=\"/house-extensions\" class=\"text-green-600 hover:underline\">house extensions</a> if you need ground-floor space instead.`,
+          `Call ${CANONICAL_PHONE_DISPLAY_UK} or use our <a href=\"/contact/\" class=\"text-green-600 hover:underline\">contact form</a>. We also build <a href=\"/house-extensions/\" class=\"text-green-600 hover:underline\">house extensions</a> if you need ground-floor space instead.`,
         ],
       },
     ],
@@ -568,7 +568,7 @@ export const servicePages: Record<string, ServicePageContent> = {
   "garden-rooms": {
     slug: "garden-rooms",
     metaTitle:
-      "Garden Rooms Ayrshire & Glasgow | Offices & Studios | RB Joinery",
+      "Garden Rooms Ayrshire & Glasgow | RB Joinery",
     metaDescription:
       "Garden rooms built in Ayrshire and Glasgow. Home offices, gyms, studios. Insulated, bespoke outdoor rooms. Free quotes — RB Joinery.",
     heroH1: "Garden Rooms in Ayrshire & Glasgow",
@@ -640,7 +640,7 @@ export const servicePages: Record<string, ServicePageContent> = {
       {
         h2: "Contact Us",
         paragraphs: [
-          "Tell us the size of your garden and what you want the room for. <a href=\"/contact\" class=\"text-green-600 hover:underline\">Get a free quote</a> or browse <a href=\"/services\" class=\"text-green-600 hover:underline\">all services</a>.",
+          "Tell us the size of your garden and what you want the room for. <a href=\"/contact/\" class=\"text-green-600 hover:underline\">Get a free quote</a> or browse <a href=\"/services/\" class=\"text-green-600 hover:underline\">all services</a>.",
         ],
       },
     ],
@@ -648,7 +648,7 @@ export const servicePages: Record<string, ServicePageContent> = {
   "kitchen-installation": {
     slug: "kitchen-installation",
     metaTitle:
-      "Kitchen Installation Ayrshire & Glasgow | Supply & Fit | RB Joinery",
+      "Kitchen Installation Ayrshire & Glasgow | RB Joinery",
     metaDescription:
       "Kitchen installation in Ayrshire and Glasgow. Design, supply, and fitting. Bespoke joinery and quality finishes. Free quotes.",
     heroH1: "Kitchen Installation in Ayrshire & Glasgow",
@@ -720,7 +720,7 @@ export const servicePages: Record<string, ServicePageContent> = {
       {
         h2: "Book a Visit",
         paragraphs: [
-          "Send photos or invite us round. <a href=\"/contact\" class=\"text-green-600 hover:underline\">Contact RB Joinery</a> for a free quote on kitchen installation.",
+          "Send photos or invite us round. <a href=\"/contact/\" class=\"text-green-600 hover:underline\">Contact RB Joinery</a> for a free quote on kitchen installation.",
         ],
       },
     ],
@@ -728,7 +728,7 @@ export const servicePages: Record<string, ServicePageContent> = {
   "home-improvements": {
     slug: "home-improvements",
     metaTitle:
-      "Home Improvements Ayrshire & Glasgow | Renovations & Repairs | RB Joinery",
+      "Home Improvements Ayrshire & Glasgow | RB Joinery",
     metaDescription:
       "Home improvements in Ayrshire and Glasgow. Renovations, repairs, joinery, and building work. Free quotes — RB Joinery.",
     heroH1: "Home Improvements in Ayrshire & Glasgow",
@@ -814,7 +814,7 @@ export const servicePages: Record<string, ServicePageContent> = {
       {
         h2: "Areas We Cover",
         paragraphs: [
-          "We work in Ayrshire towns from Girvan to Largs and across Glasgow. <a href=\"/contact\" class=\"text-green-600 hover:underline\">Get in touch</a> for a free quote on your home improvements.",
+          "We work in Ayrshire towns from Girvan to Largs and across Glasgow. <a href=\"/contact/\" class=\"text-green-600 hover:underline\">Get in touch</a> for a free quote on your home improvements.",
         ],
       },
     ],
@@ -822,7 +822,7 @@ export const servicePages: Record<string, ServicePageContent> = {
   "door-fitting": {
     slug: "door-fitting",
     metaTitle:
-      "Door Fitting Ayrshire & Glasgow | Internal & External Doors | RB Joinery",
+      "Door Fitting Ayrshire & Glasgow | RB Joinery",
     metaDescription:
       "Door fitting in Ayrshire and Glasgow. Internal and external door fitting, frame adjustments, locks, and finishing. Free quotes — RB Joinery.",
     heroH1: "Door Fitting in Ayrshire & Glasgow",
@@ -872,7 +872,7 @@ export const servicePages: Record<string, ServicePageContent> = {
       {
         h2: "Book a Free Quote",
         paragraphs: [
-          'Need a quote for door fitting? <a href="/contact" class="text-green-600 hover:underline">Contact RB Joinery</a> and we will arrange a visit.',
+          'Need a quote for door fitting? <a href="/contact/" class="text-green-600 hover:underline">Contact RB Joinery</a> and we will arrange a visit.',
         ],
       },
     ],
@@ -880,7 +880,7 @@ export const servicePages: Record<string, ServicePageContent> = {
   "bathroom-fitting": {
     slug: "bathroom-fitting",
     metaTitle:
-      "Bathroom Fitting Ayrshire & Glasgow | Bathroom Refurbishments | RB Joinery",
+      "Bathroom Fitting Ayrshire & Glasgow | RB Joinery",
     metaDescription:
       "Bathroom fitting in Ayrshire and Glasgow. Bathroom refurbishments, fixture installation, joinery finishing, and upgrades. Free quotes — RB Joinery.",
     heroH1: "Bathroom Fitting in Ayrshire & Glasgow",
@@ -930,7 +930,7 @@ export const servicePages: Record<string, ServicePageContent> = {
       {
         h2: "Get a Bathroom Fitting Quote",
         paragraphs: [
-          'Thinking about a bathroom upgrade? <a href="/contact" class="text-green-600 hover:underline">Contact RB Joinery</a> for a free quote.',
+          'Thinking about a bathroom upgrade? <a href="/contact/" class="text-green-600 hover:underline">Contact RB Joinery</a> for a free quote.',
         ],
       },
     ],

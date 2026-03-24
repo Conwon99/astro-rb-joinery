@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Navigation from '../../components/Navigation';
 import Footer from '../../components/Footer';
 import { LOCATIONS } from '../../data/locations';
+import { SERVICES } from '../../data/services';
 import { locationsHubMeta, buildCanonical } from '../../content/locationCopy';
 
 const canonical = buildCanonical('/locations');
@@ -13,25 +14,55 @@ const canonical = buildCanonical('/locations');
   <main class="min-h-screen bg-gradient-to-b from-background to-[hsl(var(--muted))] pt-24 pb-16">
     <div class="container mx-auto max-w-6xl px-4">
       <h1 class="font-display mb-4 text-4xl font-bold text-gray-900 md:text-5xl">Locations we serve</h1>
-      <p class="mb-12 max-w-3xl text-lg text-gray-700">
+      <p class="mb-6 max-w-3xl text-lg text-gray-700">
         RB Joinery works across Ayrshire and Glasgow. Choose your town for local joinery and building services,
         including house extensions, loft conversions, garden rooms, kitchens, and home improvements.
       </p>
+      <div class="mb-12 max-w-4xl space-y-4 text-base leading-relaxed text-gray-700 md:text-lg">
+        <p>
+          Each town page gives you a local overview plus service links for the work we most often quote for in that area. That makes it easier to go straight to the page you need, whether you are planning a
+          <a href="/house-extensions/" class="text-green-700 underline hover:text-green-800">house extension</a>,
+          <a href="/garden-rooms/" class="text-green-700 underline hover:text-green-800">garden room</a>,
+          <a href="/kitchen-installation/" class="text-green-700 underline hover:text-green-800">kitchen installation</a>,
+          or smaller
+          <a href="/home-improvements/" class="text-green-700 underline hover:text-green-800">home improvements</a>.
+        </p>
+        <p>
+          If you are still comparing options, you can also browse our
+          <a href="/services/" class="text-green-700 underline hover:text-green-800">full list of services</a>
+          or
+          <a href="/contact/" class="text-green-700 underline hover:text-green-800">contact us</a>
+          for a free quote.
+        </p>
+      </div>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {
           LOCATIONS.map((loc) => (
-            <a
-              href={`/${loc.slug}`}
-              class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition hover:border-green-600/40 hover:shadow-md"
-            >
-              <h2 class="font-display mb-2 text-2xl font-bold text-gray-900 group-hover:text-green-700">
-                {loc.name}
-              </h2>
-              <p class="text-sm text-gray-600">{loc.region}</p>
-              <span class="mt-4 inline-block text-sm font-semibold text-green-600 group-hover:underline">
-                View {loc.name} →
-              </span>
-            </a>
+            <div class="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition hover:border-green-600/40 hover:shadow-md">
+              <a href={`/${loc.slug}/`} class="block">
+                <h2 class="font-display mb-2 text-2xl font-bold text-gray-900 group-hover:text-green-700">
+                  {loc.name}
+                </h2>
+                <p class="text-sm text-gray-600">{loc.region}</p>
+                <span class="mt-4 inline-block text-sm font-semibold text-green-600 group-hover:underline">
+                  View {loc.name} →
+                </span>
+              </a>
+              <div class="mt-5 border-t border-gray-100 pt-4">
+                <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500">Popular services in {loc.name}</p>
+                <ul class="grid gap-2 text-sm text-gray-700">
+                  {
+                    SERVICES.map((service) => (
+                      <li>
+                        <a href={`/${loc.slug}${service.href}`} class="hover:text-green-700 hover:underline">
+                          {service.title} in {loc.name}
+                        </a>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
+            </div>
           ))
         }
       </div>

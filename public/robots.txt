@@ -1,5 +1,5 @@
 # Robots.txt for RB Joinery
-# https://rbjoinery.com/
+# https://rbjoinerystaging.netlify.app/
 
 User-agent: *
 Allow: /
@@ -34,7 +34,4 @@ User-agent: LinkedInBot
 Allow: /
 
 # Sitemap location
-Sitemap: https://rbjoinery.com/sitemap-index.xml
-
-# Crawl delay (helps with server load)
-Crawl-delay: 1
+Sitemap: https://rbjoinerystaging.netlify.app/sitemap.xml
