@@ -73,19 +73,34 @@ def main() -> None:
         print("    ->", (A(r, "Redirect URL") or "")[:85], A(r, "Redirect Type") or "")
     print()
 
-    # Canonical: staging URL should self-canonicalise; flag rbjoinery.com in canonical on staging
-    canon_mismatch = []
+    # Canonical: site uses https://rbjoinery.com (see src/constants/site.ts).
+    # Crawling Netlify preview/staging still serves the same canonical tags — that is expected.
+    expected_canon_prefix = "https://rbjoinery.com"
+    canon_issues = []
     for r in html:
+        if A(r, "Status Code") != "200":
+            continue
         addr = A(r, "Address")
         can = (A(r, "Canonical Link Element 1") or "").strip()
-        if "rbjoinerystaging.netlify.app" in addr and "rbjoinery.com" in can:
-            canon_mismatch.append((addr, can))
-        if not can and A(r, "Status Code") == "200":
-            canon_mismatch.append((addr, "(missing)"))
-    print("Canonical checks (staging HTML): issues", len(canon_mismatch))
-    for pair in canon_mismatch[:15]:
+        if not can:
+            canon_issues.append((addr, "(missing)"))
+        elif not can.startswith(expected_canon_prefix):
+            canon_issues.append((addr, can))
+    print(f"Canonical checks (200 HTML, expect {expected_canon_prefix}/...): issues", len(canon_issues))
+    for pair in canon_issues[:20]:
         print(" ", pair[0][:90])
         print("    canonical:", pair[1][:100] if pair[1] else "")
+    staging_rows = [
+        r
+        for r in html
+        if "rbjoinerystaging.netlify.app" in A(r, "Address")
+        and (A(r, "Canonical Link Element 1") or "").strip().startswith(expected_canon_prefix)
+    ]
+    if staging_rows:
+        print()
+        print(
+            f"Note: {len(staging_rows)} HTML URLs are on rbjoinerystaging.netlify.app but canonical is production — normal after SITE_ORIGIN update."
+        )
     print()
 
     # Duplicate titles — indexable HTML

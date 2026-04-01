@@ -1,5 +1,5 @@
 # Robots.txt for RB Joinery
-# https://rbjoinerystaging.netlify.app/
+# https://rbjoinery.com/
 
 User-agent: *
 Allow: /
@@ -34,4 +34,4 @@ User-agent: LinkedInBot
 Allow: /
 
 # Sitemap location
-Sitemap: https://rbjoinerystaging.netlify.app/sitemap.xml
+Sitemap: https://rbjoinery.com/sitemap.xml

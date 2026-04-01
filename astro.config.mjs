@@ -4,7 +4,7 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://rbjoinerystaging.netlify.app',
+  site: 'https://rbjoinery.com',
   /** Match Netlify pretty URLs + canonical trailing-slash URLs site-wide */
   trailingSlash: 'always',
   integrations: [
